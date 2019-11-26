@@ -3,3 +3,17 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.full-view {
+  border: solid black 2px;
+  width: 960px;
+  height: 540px;
+  display: flex;
+  flex-direction: row;
+}
+
+.quadrant {
+  border: solid orange 1px;
+  width: 50%;
+  height: 50%;
+}

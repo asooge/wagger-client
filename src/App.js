@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
+import Welcome from './Welcome'
 
 const Dashboard = () => (
   <div>
@@ -13,9 +14,12 @@ const App = () => (
     <nav>
       <Link to="/dashboard">Dashboard</Link>
     </nav>
-    <h1>Welcome to React!</h1>
+
     <div>
       <Route path="/dashboard" component={Dashboard}/>
+    </div>
+    <div className='full-view'>
+      <Welcome />
     </div>
   </div>
 )
