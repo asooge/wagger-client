@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import Welcome from './Welcome'
+import Randog from './Randog'
 
 const Dashboard = () => (
   <div>
@@ -20,6 +21,7 @@ const App = () => (
     </div>
     <div className='full-view'>
       <Welcome />
+      <Randog />
     </div>
   </div>
 )
