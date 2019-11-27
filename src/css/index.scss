@@ -10,10 +10,11 @@ body {
   height: 540px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .quadrant {
   border: solid orange 1px;
-  width: 50%;
-  height: 50%;
+  width: 478px;
+  height: 268px;
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import Welcome from './Welcome'
 import Randog from './Randog'
+import SignIn from './SignIn'
+import AuthForm from './AuthForm'
 
 const Dashboard = () => (
   <div>
@@ -22,6 +24,8 @@ const App = () => (
     <div className='full-view'>
       <Welcome />
       <Randog />
+      <SignIn />
+      <AuthForm />
     </div>
   </div>
 )
