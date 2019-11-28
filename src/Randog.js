@@ -11,7 +11,6 @@ class Randog extends React.Component {
     super()
     this.state = {
       randogs: [1, 2, 3],
-      randomNum: null,
       currentDog: Math.floor(Math.random() * 200)
     }
   }
@@ -21,13 +20,13 @@ class Randog extends React.Component {
         console.log(res)
         console.log(res.data)
         console.log(res.data.data)
-        const filterDogs = res.data.data.filter(dog => dog.images.original.width / dog.images.original.height >= 1.2)
+        const filterDogs = res.data.data.filter(dog => dog.images.original.width / dog.images.original.height >= 1.05)
         const dogIds = filterDogs.map(dog => dog.id)
         console.log(dogIds)
         const dogUrls = dogIds.map(id => `https://i.giphy.com/media/${id}/giphy.webp`)
         console.log(dogUrls)
         this.setState({ randogs: dogUrls })
-        setInterval(() => this.updateDog(), 6000)
+        setInterval(() => this.updateDog(), 6500)
       })
       .catch(console.error)
   }
@@ -39,7 +38,7 @@ class Randog extends React.Component {
   }
 
   render () {
-    if (this.state.randogs) {
+    if (this.state.currentDog) {
       return (
         <div style={{ margin: 'auto' }} className='quandrant'>
           <img style={imageStyle} src={this.state.randogs[this.state.currentDog]} />
