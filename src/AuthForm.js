@@ -1,5 +1,10 @@
 import React, { Fragment, useState } from 'react'
 
+const authContainer = {
+  display: 'flex',
+  alignItem: 'center'
+}
+
 const formStyle = {
   display: 'block',
   margin: 'auto'
@@ -63,7 +68,7 @@ const AuthForm = (props) => {
   }
   if (props.user && !props.user.name) {
     return (
-      <div className='quadrant'>
+      <div style={authContainer}className='quadrant'>
         <form name='name' onSubmit={sendData}>
           <label htmlFor='name'>What is your dog name?</label>
           <br />
@@ -74,7 +79,7 @@ const AuthForm = (props) => {
     )
   }
   return (
-    <div className='quadrant'>
+    <div style={authContainer}className='quadrant'>
       <form style={formStyle} name='user' onSubmit={sendData}>
         <label htmlFor='email'>Email: </label>
         <input onInput={handleInput} name='email' value={email}placeholder='enter email' />

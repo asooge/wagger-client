@@ -26,7 +26,7 @@ class Randog extends React.Component {
         const dogUrls = dogIds.map(id => `https://i.giphy.com/media/${id}/giphy.webp`)
         console.log(dogUrls)
         this.setState({ randogs: dogUrls })
-        setInterval(() => this.updateDog(), 6500)
+        setInterval(() => this.updateDog(), 12000)
       })
       .catch(console.error)
   }
