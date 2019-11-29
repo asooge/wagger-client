@@ -46,6 +46,18 @@ class App extends React.Component {
           this.setState({ user: res.data.user })
         })
         .catch(console.error)
+    } else if (this.state.user) {
+      console.log('image submit')
+      axios({
+        method: 'POST',
+        url: `${apiConfig}/users/${this.state.user._id}/images/${this.state.user.images.length}`,
+        data
+      })
+        .then(res => {
+          console.log(res)
+          this.setState({ user: res.data.user })
+        })
+        .catch(console.error)
     } else if (this.state.signIn === 'sign-in') {
       axios({
         method: 'POST',

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+const FormData = require('form-data')
 
 const authContainer = {
   display: 'flex',
@@ -16,19 +17,22 @@ const AuthForm = (props) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
+  const [image, setImage] = useState('')
 
   const handleInput = (event) => {
     event.persist()
-    const name = event.target.name
+    const htmlName = event.target.name
     const value = event.target.value
-    if (name === 'email') {
+    if (htmlName === 'email') {
       setEmail(value)
-    } else if (name === 'password') {
+    } else if (htmlName === 'password') {
       setPassword(value)
-    } else if (name === 'confirm-password') {
+    } else if (htmlName === 'confirm-password') {
       setConfirmPassword(value)
-    } else if (name === 'name') {
+    } else if (htmlName === 'name') {
       setName(value)
+    } else if (htmlName === 'file') {
+      setImage(value)
     }
   }
   const sendData = (event) => {
@@ -39,7 +43,7 @@ const AuthForm = (props) => {
     if (name) {
       data = { name: name }
       console.log(data)
-    } else {
+    } else if (password) {
       data = {
         credentials: {
           email: email,
@@ -47,6 +51,13 @@ const AuthForm = (props) => {
           password_confirmation: confirmPassword
         }
       }
+    } else if (event.target.name === 'file') {
+      console.log(event.target.name)
+      console.log('ready to send data')
+      console.log(event.target)
+      console.log(document.getElementById('image-form'))
+      data = new FormData(event.target)
+      console.log(data)
     }
     // make axios call
     props.makeAxios(data)
@@ -55,6 +66,7 @@ const AuthForm = (props) => {
     setPassword('')
     setConfirmPassword('')
     setName('')
+    setImage('')
   }
   const confirmPass = (
     <Fragment>
@@ -66,6 +78,7 @@ const AuthForm = (props) => {
   if (!props.signIn) {
     return ''
   }
+  // if user is signed in, but has no dog name
   if (props.user && !props.user.name) {
     return (
       <div style={authContainer}className='quadrant'>
@@ -73,6 +86,20 @@ const AuthForm = (props) => {
           <label htmlFor='name'>What is your dog name?</label>
           <br />
           <input onInput={handleInput} name='name' value={name} placeholder='enter your dog name' />
+          <button>Submit</button>
+        </form>
+      </div>
+    )
+  }
+  // if user is signed in, but has no dog images
+  if (props.user && props.user.images.length < 4) {
+    return (
+      <div style={authContainer}className='quadrant'>
+        <form name='file' onSubmit={sendData}>
+          <p>Upload pictures of your dog. No selfies!</p>
+          <label htmlFor='images'>Image {props.user.images.length + 1}/4</label>
+          <br />
+          <input type='file' encType='multipart/form-data' onInput={handleInput} name='file' value={image} placeholder='dog pictures' />
           <button>Submit</button>
         </form>
       </div>
