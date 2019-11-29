@@ -25,12 +25,40 @@ class App extends React.Component {
           passwordConfirmation: ''
         }
       },
-      signIn: null
+      signIn: null,
+      randogs: [],
+      currentDog: null
     }
+  }
+  componentDidMount () {
+    axios('https://api.giphy.com/v1/gifs/search?q=dogs&api_key=UW6UfEEO71CGk2AZgexrHeGYiTRAy1GK&rating=g&limit=1000')
+      .then((res) => {
+        console.log(res)
+        console.log(res.data)
+        console.log(res.data.data)
+        const filterDogs = res.data.data.filter(dog => dog.images.original.width / dog.images.original.height >= 1.05)
+        const dogIds = filterDogs.map(dog => dog.id)
+        console.log(dogIds)
+        const dogUrls = dogIds.map(id => `https://i.giphy.com/media/${id}/giphy.webp`)
+        console.log(dogUrls)
+        const randNum = Math.floor(Math.random() * dogUrls.length)
+        this.setState({ currentDog: dogUrls[randNum] })
+        this.setState({ randogs: dogUrls })
+        // const shuffleDog = setInterval(() => this.updateDog(), 12000)
+      })
+      .catch(console.error)
+  }
+
+  updateDog = () => {
+    console.log('update successful')
+    const randNum = Math.floor(Math.random() * this.state.randogs.length)
+    console.log(randNum)
+    this.setState({ currentDog: this.state.randogs[randNum] })
   }
   updateSignIn = (event) => {
     this.setState({ signIn: event.target.name })
   }
+  shuffleDog = setInterval(() => this.updateDog(), 12000)
 
   makeAxios = (data) => {
     console.log(data)
@@ -55,7 +83,9 @@ class App extends React.Component {
       })
         .then(res => {
           console.log(res)
+          clearInterval(this.shuffleDog)
           this.setState({ user: res.data.user })
+          this.setState({ currentDog: res.data.user.images[res.data.user.images.length - 1] })
         })
         .catch(console.error)
     } else if (this.state.signIn === 'sign-in') {
@@ -95,7 +125,7 @@ class App extends React.Component {
         </div>
         <div className='full-view'>
           <Welcome user={this.state.user}/>
-          <Randog />
+          <Randog currentDog={this.state.currentDog}/>
           <Auth
             signIn={this.state.signIn}
             auth={this.state.auth}
