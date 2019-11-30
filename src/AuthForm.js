@@ -116,10 +116,10 @@ const AuthForm = (props) => {
     return (
       <div style={authContainer}className='quadrant'>
         <form name='speak' onSubmit={sendData}>
-          <p>Say something about your dog. Limit 500 characters.</p>
+          <p>Say something about your dog. Limit 300 characters.</p>
           <label htmlFor='speak'>Speak: </label>
           <br />
-          <input onInput={handleInput} name='speak' value={speak} placeholder='woof' />
+          <textarea rows="5" cols="50" onInput={handleInput} maxLength='300' name='speak' value={speak} placeholder='woof' />
           <button>Submit</button>
         </form>
       </div>
