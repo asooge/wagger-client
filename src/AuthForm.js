@@ -18,6 +18,7 @@ const AuthForm = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
+  const [speak, setSpeak] = useState('')
 
   const handleInput = (event) => {
     event.persist()
@@ -33,6 +34,8 @@ const AuthForm = (props) => {
       setName(value)
     } else if (htmlName === 'file') {
       setImage(value)
+    } else if (htmlName === 'speak') {
+      setSpeak(value)
     }
   }
   const sendData = (event) => {
@@ -58,6 +61,8 @@ const AuthForm = (props) => {
       console.log(document.getElementById('image-form'))
       data = new FormData(event.target)
       console.log(data)
+    } else if (event.target.name === 'speak') {
+      data = { speak: speak }
     }
     // make axios call
     props.makeAxios(data)
@@ -67,6 +72,7 @@ const AuthForm = (props) => {
     setConfirmPassword('')
     setName('')
     setImage('')
+    setSpeak('')
   }
   const confirmPass = (
     <Fragment>
@@ -100,6 +106,20 @@ const AuthForm = (props) => {
           <label htmlFor='images'>Image {props.user.images.length + 1}/4</label>
           <br />
           <input type='file' encType='multipart/form-data' onInput={handleInput} name='file' value={image} placeholder='dog pictures' />
+          <button>Submit</button>
+        </form>
+      </div>
+    )
+  }
+  // if user is signed in but has not updated 'speak'
+  if (props.user && props.user.speak === 'woof') {
+    return (
+      <div style={authContainer}className='quadrant'>
+        <form name='speak' onSubmit={sendData}>
+          <p>Say something about your dog. Limit 500 characters.</p>
+          <label htmlFor='speak'>Speak: </label>
+          <br />
+          <input onInput={handleInput} name='speak' value={speak} placeholder='woof' />
           <button>Submit</button>
         </form>
       </div>

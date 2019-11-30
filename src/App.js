@@ -74,6 +74,11 @@ class App extends React.Component {
           this.setState({ user: res.data.user })
         })
         .catch(console.error)
+    } else if (data.speak) {
+      axios.post(`${apiConfig}/users/${this.state.user._id}/speak`, data)
+        .then(res => {
+          this.setState({ user: res.data.user })
+        })
     } else if (this.state.user) {
       console.log('image submit')
       axios({
