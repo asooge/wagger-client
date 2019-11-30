@@ -19,6 +19,7 @@ const AuthForm = (props) => {
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
   const [speak, setSpeak] = useState('')
+  const [profile, setProfile] = useState('')
 
   const handleInput = (event) => {
     event.persist()
@@ -36,6 +37,8 @@ const AuthForm = (props) => {
       setImage(value)
     } else if (htmlName === 'speak') {
       setSpeak(value)
+    } else if (htmlName === 'profile') {
+      setProfile(value)
     }
   }
   const sendData = (event) => {
@@ -63,6 +66,8 @@ const AuthForm = (props) => {
       console.log(data)
     } else if (event.target.name === 'speak') {
       data = { speak: speak }
+    } else if (event.target.name === 'profile') {
+      data = new FormData(event.target)
     }
     // make axios call
     props.makeAxios(data)
@@ -120,6 +125,19 @@ const AuthForm = (props) => {
           <label htmlFor='speak'>Speak: </label>
           <br />
           <textarea rows="5" cols="50" onInput={handleInput} maxLength='300' name='speak' value={speak} placeholder='woof' />
+          <button>Submit</button>
+        </form>
+      </div>
+    )
+  }
+  // if user is signe in but doesn't have a profile picture
+  if (props.user && !props.user.profile) {
+    return (
+      <div style={authContainer}className='quadrant'>
+        <form name='profile' onSubmit={sendData}>
+          <p>Upload a profile picture, of you with your dog. This will only be visible to your matches.</p>
+          <label htmlFor='images'>Your profile: </label>
+          <input type='file' encType='multipart/form-data' onInput={handleInput} name='profile' value={profile} />
           <button>Submit</button>
         </form>
       </div>

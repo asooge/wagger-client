@@ -79,6 +79,13 @@ class App extends React.Component {
         .then(res => {
           this.setState({ user: res.data.user })
         })
+    } else if (this.state.user && this.state.user.images.length === 4) {
+      axios.post(`${apiConfig}/users/${this.state.user._id}/profile`, data)
+        .then(res => {
+          clearInterval(this.shuffleDog)
+          this.setState({ user: res.data.user })
+          this.setState({ currentDog: res.data.user.profile })
+        })
     } else if (this.state.user) {
       console.log('image submit')
       axios({
