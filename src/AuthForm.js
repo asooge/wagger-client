@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 const FormData = require('form-data')
 
 const authContainer = {
@@ -82,7 +83,7 @@ const AuthForm = (props) => {
   const confirmPass = (
     <Fragment>
       <label htmlFor='confirm-password'>Confirm: </label>
-      <input onInput={handleInput} name='confirm-password' value={confirmPassword} placeholder='confirm password' />
+      <input type='password' onInput={handleInput} name='confirm-password' value={confirmPassword} placeholder='confirm password' />
       <br />
     </Fragment>
   )
@@ -135,13 +136,16 @@ const AuthForm = (props) => {
     return (
       <div style={authContainer}className='quadrant'>
         <form name='profile' onSubmit={sendData}>
-          <p>Upload a profile picture, of you with your dog. This will only be visible to your matches.</p>
+          <p>Upload a profile picture, of you and your dog. This will only be visible to your matches.</p>
           <label htmlFor='images'>Your profile: </label>
           <input type='file' encType='multipart/form-data' onInput={handleInput} name='profile' value={profile} />
           <button>Submit</button>
         </form>
       </div>
     )
+  }
+  if (props.user && props.user.profile) {
+    return <Redirect to='/wagger' />
   }
   return (
     <div style={authContainer}className='quadrant'>
@@ -150,7 +154,7 @@ const AuthForm = (props) => {
         <input onInput={handleInput} name='email' value={email}placeholder='enter email' />
         <br />
         <label htmlFor='password'>Password: </label>
-        <input onInput={handleInput} name='password' value={password} placeholder='enter password' />
+        <input type='password' onInput={handleInput} name='password' value={password} placeholder='enter password' />
         <br />
         { props.signIn === 'sign-up' ? confirmPass : ''}
         <button>Submit</button>
