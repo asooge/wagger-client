@@ -8,6 +8,9 @@ const DogDetails = props => {
       <div className='quadrant'>
         <h1>{props.userName}</h1>
         <p>{props.speak}</p>
+        <h3 style={{ display: 'inline-block' }}>Is it a match: </h3>
+        <button>Yes</button>
+        <button>No</button>
       </div>
     )
   }
