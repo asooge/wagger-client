@@ -145,6 +145,7 @@ const AuthForm = (props) => {
     )
   }
   if (props.user && props.user.profile) {
+    console.log(props.user.profile)
     return <Redirect to='/wagger' />
   }
   return (

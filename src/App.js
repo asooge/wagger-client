@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Redirect } from 'react-router-dom'
 import Wagger from './Wagger'
 import Home from './Home'
 import apiConfig from './apiConfig'
@@ -111,7 +111,17 @@ class App extends React.Component {
             />)
           }
           } />
-          <Route path="/wagger" component={Wagger} />
+          <Route path="/wagger" render={() => {
+            if (!this.state.user) {
+              return <Redirect to='/' />
+            }
+            return (
+              <Wagger
+                currentDog={this.state.currentDog}
+                user={this.state.user.profile}
+              />
+            )
+          }} />
         </div>
 
       </div>
