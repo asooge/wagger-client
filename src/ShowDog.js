@@ -6,11 +6,21 @@ const imageStyle = {
   margin: 'auto'
 }
 
-const ShowDog = props => (
-  <div className = 'quadrant'>
-    <img src={props.currentDog} style={imageStyle}/>
-    <button onClick={props.nextWag}>next</button>
-  </div>
-)
+const ShowDog = props => {
+  if (props.needBones) {
+    return (
+      <div className = 'quadrant'>
+        <img src={props.currentDog} style={imageStyle}/>
+        <button onClick={props.nextDog}>next</button>
+      </div>
+    )
+  } else {
+    return (
+      <div className = 'quadrant'>
+        <button onClick={props.nextDog}>next</button>
+      </div>
+    )
+  }
+}
 
 export default ShowDog

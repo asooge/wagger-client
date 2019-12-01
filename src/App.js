@@ -118,7 +118,9 @@ class App extends React.Component {
             return (
               <Wagger
                 currentDog={this.state.currentDog}
-                user={this.state.user.profile}
+                profile={this.state.user.profile}
+                speak={this.state.user.speak}
+                userName={this.state.user.name}
               />
             )
           }} />

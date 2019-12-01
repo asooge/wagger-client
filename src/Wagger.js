@@ -2,6 +2,7 @@ import React from 'react'
 // import { Redirect } from 'react-router-dom'
 import Profile from './Profile'
 import ShowDog from './ShowDog'
+import UserDetail from './UserDetail'
 
 class Wagger extends React.Component {
   constructor () {
@@ -13,7 +14,7 @@ class Wagger extends React.Component {
     }
   }
 
-  nextWag = () => {
+  nextDog = () => {
     // if wag index is less than 4. Set to next index ++
 
     if (this.state.wag < 4) {
@@ -32,18 +33,16 @@ class Wagger extends React.Component {
   }
 
   render () {
-    if (this.state.needBones) {
-      return (
-        <p>show need bones menu and randog</p>
-      )
-    }
     return (
       <div className='full-view'>
         <div className='quadrant'>
-          <Profile profile={this.props.user} />
+          <Profile profile={this.props.profile} />
         </div>
         <div className='quadrant'>
-          <ShowDog nextDog={this.nextWag} currentDog={this.props.currentDog}/>
+          <ShowDog nextDog={this.nextDog} needBones={this.state.needBones} currentDog={this.props.currentDog}/>
+        </div>
+        <div className='quadrant'>
+          <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
         </div>
       </div>
     )
