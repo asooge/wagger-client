@@ -3,6 +3,7 @@ import React from 'react'
 import Profile from './Profile'
 import ShowDog from './ShowDog'
 import UserDetail from './UserDetail'
+import DogDetails from './DogDetails'
 
 class Wagger extends React.Component {
   constructor () {
@@ -34,15 +35,18 @@ class Wagger extends React.Component {
 
   render () {
     return (
-      <div className='full-view'>
+      <div style={{ flexDirection: 'column' }}className='full-view'>
         <div className='quadrant'>
           <Profile profile={this.props.profile} />
+        </div>
+        <div className='quadrant'>
+          <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
         </div>
         <div className='quadrant'>
           <ShowDog nextDog={this.nextDog} needBones={this.state.needBones} currentDog={this.props.currentDog}/>
         </div>
         <div className='quadrant'>
-          <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
+          <DogDetails speak={this.props.speak} userName={this.props.userName} needBones={this.state.needBones} />
         </div>
       </div>
     )
