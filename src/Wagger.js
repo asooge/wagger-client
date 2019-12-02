@@ -47,6 +47,22 @@ class Wagger extends React.Component {
     }
   }
 
+  nextImage = () => {
+    if (this.state.imageIndex < this.state.waggers[this.state.wag].images.length - 1) {
+      this.setState((state) => (
+        { imageIndex: state.imageIndex + 1 }
+      ))
+    }
+  }
+
+  priorImage = () => {
+    if (this.state.imageIndex > 0) {
+      this.setState((state) => (
+        { imageIndex: state.imageIndex - 1 }
+      ))
+    }
+  }
+
   render () {
     return (
       <div style={{ flexDirection: 'column' }}className='full-view'>
@@ -57,10 +73,10 @@ class Wagger extends React.Component {
           <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
         </div>
         <div className='quadrant'>
-          <ShowDog nextDog={this.nextDog} needBones={this.state.needBones} currentDog={this.props.currentDog} seeWagger={this.state.waggers[this.state.wag].images[this.state.imageIndex]}/>
+          <ShowDog nextDog={this.nextDog} nextImage={this.nextImage} priorImage={this.priorImage} needBones={this.state.needBones} currentDog={this.props.currentDog} seeWagger={this.state.waggers[this.state.wag].images[this.state.imageIndex]}/>
         </div>
         <div className='quadrant'>
-          <DogDetails speak={this.state.waggers[this.state.wag].speak} userName={this.state.waggers[this.state.wag].name} needBones={this.state.needBones} />
+          <DogDetails speak={this.state.waggers[this.state.wag].speak} userName={this.state.waggers[this.state.wag].name} needBones={this.state.needBones} nextDog={this.nextDog}/>
         </div>
       </div>
     )

@@ -26,7 +26,7 @@ class App extends React.Component {
       },
       signIn: null,
       randogs: [],
-      currentDog: null
+      currentDog: 'null'
     }
   }
   componentDidMount () {
