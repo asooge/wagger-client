@@ -52,7 +52,7 @@ class App extends React.Component {
   updateSignIn = (event) => {
     this.setState({ signIn: event.target.name })
   }
-  shuffleDog = setInterval(() => this.updateDog(), 12000)
+  shuffleDog = () => setInterval(() => this.updateDog(), 12000)
 
   makeAxios = (data) => {
     console.log(data)
@@ -121,6 +121,9 @@ class App extends React.Component {
                 profile={this.state.user.profile}
                 speak={this.state.user.speak}
                 userName={this.state.user.name}
+                setUser={this.setState.bind(this)}
+                me={this.state.user._id}
+                shuffleDog={this.shuffleDog}
               />
             )
           }} />

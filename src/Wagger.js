@@ -4,6 +4,8 @@ import Profile from './Profile'
 import ShowDog from './ShowDog'
 import UserDetail from './UserDetail'
 import DogDetails from './DogDetails'
+import apiConfig from './apiConfig'
+import axios from 'axios'
 
 class Wagger extends React.Component {
   constructor () {
@@ -13,6 +15,15 @@ class Wagger extends React.Component {
       wag: 0,
       needBones: false
     }
+  }
+
+  componentDidMount () {
+    axios(`${apiConfig}/wagger/${this.props.me}`)
+      .then(res => {
+        console.log('see waggers:', res)
+        this.props.setUser({ user: res.data.user })
+      })
+      .catch(console.error)
   }
 
   nextDog = () => {
@@ -27,6 +38,7 @@ class Wagger extends React.Component {
       // wagger array is only length: 5
     } else {
       console.log('hello do I need to Redirect?')
+      this.props.shuffleDog()
       return (
         this.setState({ needBones: true })
       )
