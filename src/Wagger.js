@@ -8,11 +8,12 @@ import apiConfig from './apiConfig'
 import axios from 'axios'
 
 class Wagger extends React.Component {
-  constructor () {
+  constructor (props) {
     super()
     this.state = {
-      waggers: [],
-      wag: 0,
+      waggers: props.waggers,
+      wag: props.wag,
+      imageIndex: 0,
       needBones: false
     }
   }
@@ -22,6 +23,7 @@ class Wagger extends React.Component {
       .then(res => {
         console.log('see waggers:', res)
         this.props.setUser({ user: res.data.user })
+        console.log('wheres the new dog')
       })
       .catch(console.error)
   }
@@ -55,10 +57,10 @@ class Wagger extends React.Component {
           <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
         </div>
         <div className='quadrant'>
-          <ShowDog nextDog={this.nextDog} needBones={this.state.needBones} currentDog={this.props.currentDog}/>
+          <ShowDog nextDog={this.nextDog} needBones={this.state.needBones} currentDog={this.props.currentDog} seeWagger={this.state.waggers[this.state.wag].images[this.state.imageIndex]}/>
         </div>
         <div className='quadrant'>
-          <DogDetails speak={this.props.speak} userName={this.props.userName} needBones={this.state.needBones} />
+          <DogDetails speak={this.state.waggers[this.state.wag].speak} userName={this.state.waggers[this.state.wag].name} needBones={this.state.needBones} />
         </div>
       </div>
     )

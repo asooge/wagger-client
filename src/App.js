@@ -124,6 +124,8 @@ class App extends React.Component {
                 setUser={this.setState.bind(this)}
                 me={this.state.user._id}
                 shuffleDog={this.shuffleDog}
+                waggers={this.state.user.waggers}
+                wag={this.state.user.wag}
               />
             )
           }} />
