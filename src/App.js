@@ -148,7 +148,7 @@ class App extends React.Component {
               <FullProfile
                 name={this.state.user.name}
                 speak={this.state.user.speak}
-                setUser={this.setState}
+                setUser={this.setStatexc}
               />
             )
           }} />

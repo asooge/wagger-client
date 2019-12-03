@@ -1,5 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import EditProfile from './EditProfile'
 
 const buttonStyle = {
   display: 'block',
@@ -28,7 +29,7 @@ class FullProfile extends React.Component {
     return (
       <div className='full-view'>
         <div className='quadrant'>
-          <h1>Full Profile</h1>
+          <EditProfile />
         </div>
         <div className='quadrant'>
           <p>Q2</p>
