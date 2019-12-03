@@ -28,7 +28,7 @@ class Wagger extends React.Component {
       .catch(console.error)
   }
 
-  nextDog = () => {
+  nextDog = (event) => {
     // if wag index is less than 4. Set to next index ++
 
     if (this.state.wag < 4) {
@@ -48,7 +48,7 @@ class Wagger extends React.Component {
   }
 
   nextImage = () => {
-    if (this.state.imageIndex < this.state.waggers[this.state.wag].images.length - 1) {
+    if (this.state.imageIndex < this.props.waggers[this.props.wag].images.length - 1) {
       this.setState((state) => (
         { imageIndex: state.imageIndex + 1 }
       ))
@@ -64,6 +64,24 @@ class Wagger extends React.Component {
   }
 
   render () {
+    if (!this.props.waggers[0]) {
+      return (
+        <div style={{ flexDirection: 'column' }}className='full-view'>
+          <div className='quadrant'>
+            <Profile profile={this.props.profile} />
+          </div>
+          <div className='quadrant'>
+            <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
+          </div>
+          <div className='quadrant'>
+            <ShowDog />
+          </div>
+          <div className='quadrant'>
+            <DogDetails />
+          </div>
+        </div>
+      )
+    }
     return (
       <div style={{ flexDirection: 'column' }}className='full-view'>
         <div className='quadrant'>
@@ -73,10 +91,10 @@ class Wagger extends React.Component {
           <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
         </div>
         <div className='quadrant'>
-          <ShowDog nextDog={this.nextDog} nextImage={this.nextImage} priorImage={this.priorImage} needBones={this.state.needBones} currentDog={this.props.currentDog} seeWagger={this.state.waggers[this.state.wag].images[this.state.imageIndex]}/>
+          <ShowDog nextDog={this.nextDog} nextImage={this.nextImage} priorImage={this.priorImage} needBones={this.state.needBones} currentDog={this.props.currentDog} seeWagger={this.props.waggers[this.props.wag].images[this.state.imageIndex]}/>
         </div>
         <div className='quadrant'>
-          <DogDetails speak={this.state.waggers[this.state.wag].speak} userName={this.state.waggers[this.state.wag].name} needBones={this.state.needBones} nextDog={this.nextDog}/>
+          <DogDetails speak={this.props.waggers[this.props.wag].speak} userName={this.props.waggers[this.props.wag].name} needBones={this.state.needBones} nextDog={this.nextDog}/>
         </div>
       </div>
     )

@@ -33,7 +33,6 @@ const ShowDog = props => {
         <img src={props.seeWagger} style={imageStyle} />
         <div className='next-image' onClick={props.priorImage} />
         <div className='next-image' onClick={props.nextImage} />
-        <button onClick={props.nextDog}>next</button>
       </div>
     )
   }

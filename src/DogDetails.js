@@ -9,8 +9,8 @@ const DogDetails = props => {
         <h1>{props.userName}</h1>
         <p>{props.speak}</p>
         <h3 style={{ display: 'inline-block' }}>Is it a match: </h3>
-        <button onClick={props.nextDog}>Yes</button>
-        <button onClick={props.nextDog}>No</button>
+        <button name='yes' onClick={props.nextDog}>Yes</button>
+        <button name='no' onClick={props.nextDog}>No</button>
       </div>
     )
   }
