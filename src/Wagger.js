@@ -1,9 +1,10 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import Profile from './Profile'
 import ShowDog from './ShowDog'
 import UserDetail from './UserDetail'
 import DogDetails from './DogDetails'
+import Match from './Match'
 import apiConfig from './apiConfig'
 import axios from 'axios'
 
@@ -39,13 +40,11 @@ class Wagger extends React.Component {
       axios.patch(`${apiConfig}/users/${this.props.me}/likes/${this.props.waggers[this.props.wag]._id}`)
         .then(res => {
           // if response user matches is greater than current user matches
-          if (res.data.user.matches.length > this.props.matches) {
+          if (res.data.user.matches.length > this.props.matches.length) {
+            console.log('its a match')
             // update user data
             this.props.setUser({ user: res.data.user })
             // return JSX. Redirect to the match component
-            return (
-              <Redirect to='/match/:id' />
-            )
           } else {
             this.props.setUser({ user: res.data.user })
           }
@@ -82,6 +81,11 @@ class Wagger extends React.Component {
   }
 
   render () {
+    if (this.props.wag > 0 && this.props.matches.find(match => match.reference === this.props.waggers[this.props.wag - 1]._id)) {
+      return (
+        <Match user={this.props.matches[this.props.matches.length - 1].reference}/>
+      )
+    }
     if (!this.props.waggers[this.props.wag]) {
       return (
         <div style={{ flexDirection: 'column' }}className='full-view'>

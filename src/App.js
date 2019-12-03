@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Link, Redirect } from 'react-router-dom'
 import Wagger from './Wagger'
 import Home from './Home'
+import Match from './Match'
 import apiConfig from './apiConfig'
 import axios from 'axios'
 
@@ -26,7 +27,7 @@ class App extends React.Component {
       },
       signIn: null,
       randogs: [],
-      currentDog: 'null',
+      currentDog: null,
       needBones: false
     }
   }
@@ -118,7 +119,7 @@ class App extends React.Component {
             />)
           }
           } />
-          <Route path="/wagger" render={() => {
+          <Route exact path="/wagger" render={() => {
             if (!this.state.user) {
               return <Redirect to='/' />
             }
@@ -127,7 +128,7 @@ class App extends React.Component {
                 currentDog={this.state.currentDog}
                 profile={this.state.user.profile}
                 speak={this.state.user.speak}
-                matches={this.state.user.matches.length}
+                matches={this.state.user.matches}
                 userName={this.state.user.name}
                 setUser={this.setState.bind(this)}
                 me={this.state.user._id}
@@ -136,6 +137,14 @@ class App extends React.Component {
                 wag={this.state.user.wag}
                 needBones={this.state.needBones}
               />
+            )
+          }} />
+          <Route path="/match/:id" render={() => {
+            if (!this.state.user) {
+              return <Redirect to='/' />
+            }
+            return (
+              <Match />
             )
           }} />
         </div>
