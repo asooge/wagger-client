@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 
 const buttonStyle = {
   display: 'block',
@@ -10,12 +11,19 @@ const buttonStyle = {
   borderRadius: '5px'
 }
 
-const UserDetail = props => (
-  <div className='quadrant'>
-    <h1>{props.userName}</h1>
-    <p>{props.speak}</p>
-    <button style={buttonStyle}>Full Profile</button>
-  </div>
-)
+const UserDetail = props => {
+  const [fullProfile, setFullProfile] = useState(false)
+
+  if (fullProfile === true) {
+    return <Redirect to='/profile' />
+  }
+  return (
+    <div className='quadrant'>
+      <h1>{props.userName}</h1>
+      <p>{props.speak}</p>
+      <button style={buttonStyle} onClick={() => setFullProfile(true)}>Full Profile</button>
+    </div>
+  )
+}
 
 export default UserDetail

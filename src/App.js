@@ -3,6 +3,7 @@ import { Route, Link, Redirect } from 'react-router-dom'
 import Wagger from './Wagger'
 import Home from './Home'
 import Match from './Match'
+import FullProfile from './FullProfile'
 import apiConfig from './apiConfig'
 import axios from 'axios'
 
@@ -136,6 +137,18 @@ class App extends React.Component {
                 waggers={this.state.user.waggers}
                 wag={this.state.user.wag}
                 needBones={this.state.needBones}
+              />
+            )
+          }} />
+          <Route path="/profile" render={() => {
+            if (!this.state.user) {
+              return <Redirect to='/' />
+            }
+            return (
+              <FullProfile
+                name={this.state.user.name}
+                speak={this.state.user.speak}
+                setUser={this.setState}
               />
             )
           }} />
