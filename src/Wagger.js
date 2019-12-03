@@ -81,7 +81,7 @@ class Wagger extends React.Component {
   }
 
   render () {
-    if (this.props.wag > 0 && this.props.matches.find(match => match.reference === this.props.waggers[this.props.wag - 1]._id)) {
+    if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference === this.props.waggers[this.props.wag - 1]._id)) {
       return (
         <Match user={this.props.matches[this.props.matches.length - 1].reference}/>
       )
