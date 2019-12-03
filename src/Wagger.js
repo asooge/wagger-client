@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Profile from './Profile'
 import ShowDog from './ShowDog'
 import UserDetail from './UserDetail'
@@ -13,8 +13,7 @@ class Wagger extends React.Component {
     this.state = {
       waggers: props.waggers,
       wag: props.wag,
-      imageIndex: 0,
-      needBones: false
+      imageIndex: 0
     }
   }
 
@@ -29,21 +28,40 @@ class Wagger extends React.Component {
   }
 
   nextDog = (event) => {
-    // if wag index is less than 4. Set to next index ++
+    // if event.target.name === 'no'
+    if (event.target.name === 'no') {
+      // sent the api post request to '/wagger/:id'
+      axios.post(`${apiConfig}/wagger/${this.props.me}`)
+        .then(res => this.props.setUser({ user: res.data.user }))
+        .catch(console.error)
+    } else if (event.target.name === 'yes') {
+      // send post request '/wagger/:id'
+      axios.patch(`${apiConfig}/users/${this.props.me}/likes/${this.props.waggers[this.props.wag]._id}`)
+        .then(res => {
+          // if response user matches is greater than current user matches
+          if (res.data.user.matches.length > this.props.matches) {
+            // update user data
+            this.props.setUser({ user: res.data.user })
+            // return JSX. Redirect to the match component
+            return (
+              <Redirect to='/match/:id' />
+            )
+          } else {
+            this.props.setUser({ user: res.data.user })
+          }
+        })
+    }
 
-    if (this.state.wag < 4) {
+    // if wag index is less than 4. Console log
+    if (this.props.wag < 4) {
       console.log('wag')
-      this.setState((state) => (
-        { wag: state.wag + 1 }
-      ))
+
       // otherwise return JSX
       // wagger array is only length: 5
     } else {
-      console.log('hello do I need to Redirect?')
+      console.log('got bones...?')
       this.props.shuffleDog()
-      return (
-        this.setState({ needBones: true })
-      )
+      this.props.setUser({ needBones: true })
     }
   }
 
@@ -64,7 +82,7 @@ class Wagger extends React.Component {
   }
 
   render () {
-    if (!this.props.waggers[0]) {
+    if (!this.props.waggers[this.props.wag]) {
       return (
         <div style={{ flexDirection: 'column' }}className='full-view'>
           <div className='quadrant'>
@@ -74,10 +92,14 @@ class Wagger extends React.Component {
             <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
           </div>
           <div className='quadrant'>
-            <ShowDog />
+            <ShowDog
+              needBones={this.props.needBones} currentDog={this.props.currentDog}
+            />
           </div>
           <div className='quadrant'>
-            <DogDetails />
+            <DogDetails
+              needBones={this.props.needBones}
+            />
           </div>
         </div>
       )
@@ -91,10 +113,10 @@ class Wagger extends React.Component {
           <UserDetail profile={this.props.profile} userName={this.props.userName} speak={this.props.speak}/>
         </div>
         <div className='quadrant'>
-          <ShowDog nextDog={this.nextDog} nextImage={this.nextImage} priorImage={this.priorImage} needBones={this.state.needBones} currentDog={this.props.currentDog} seeWagger={this.props.waggers[this.props.wag].images[this.state.imageIndex]}/>
+          <ShowDog nextDog={this.nextDog} nextImage={this.nextImage} priorImage={this.priorImage} needBones={this.props.needBones} currentDog={this.props.currentDog} seeWagger={this.props.waggers[this.props.wag].images[this.state.imageIndex]}/>
         </div>
         <div className='quadrant'>
-          <DogDetails speak={this.props.waggers[this.props.wag].speak} userName={this.props.waggers[this.props.wag].name} needBones={this.state.needBones} nextDog={this.nextDog}/>
+          <DogDetails speak={this.props.waggers[this.props.wag].speak} userName={this.props.waggers[this.props.wag].name} needBones={this.props.needBones} nextDog={this.nextDog}/>
         </div>
       </div>
     )

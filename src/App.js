@@ -26,7 +26,8 @@ class App extends React.Component {
       },
       signIn: null,
       randogs: [],
-      currentDog: 'null'
+      currentDog: 'null',
+      needBones: false
     }
   }
   componentDidMount () {
@@ -80,7 +81,13 @@ class App extends React.Component {
         .catch(console.error)
     } else if (this.state.signIn === 'sign-in') {
       axios.post(`${apiConfig}/sign-in`, data)
-        .then(res => this.setState({ user: res.data.user }))
+        .then(res => {
+          if (res.data.user.wag > 4) {
+            this.setState({ user: res.data.user, needBones: true })
+          } else {
+            this.setState({ user: res.data.user })
+          }
+        })
         .catch(console.error)
     } else if (this.state.signIn === 'sign-up') {
       axios.post(`${apiConfig}/sign-up`, data)
@@ -120,12 +127,14 @@ class App extends React.Component {
                 currentDog={this.state.currentDog}
                 profile={this.state.user.profile}
                 speak={this.state.user.speak}
+                matches={this.state.user.matches.length}
                 userName={this.state.user.name}
                 setUser={this.setState.bind(this)}
                 me={this.state.user._id}
                 shuffleDog={this.shuffleDog}
                 waggers={this.state.user.waggers}
                 wag={this.state.user.wag}
+                needBones={this.state.needBones}
               />
             )
           }} />
