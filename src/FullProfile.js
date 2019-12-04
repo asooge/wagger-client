@@ -1,27 +1,45 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import EditProfile from './EditProfile'
-
-const buttonStyle = {
-  display: 'block',
-  color: 'red',
-  width: '80%',
-  height: '26%',
-  padding: '0',
-  margin: '13% auto 1%',
-  borderRadius: '5px',
-  position: 'relative',
-  top: '75px'
-}
+import MyImages from './MyImages'
+import BackToWagger from './BackToWagger'
+import UpdateProfile from './UpdateProfile'
 
 class FullProfile extends React.Component {
   constructor (props) {
     super()
     this.state = {
       backToWagger: false,
-      name: ''
+      name: '',
+      updateImage: 0,
+      show: null
     }
   }
+
+  browseImage = event => {
+    event.persist()
+    console.log(event.target.id)
+    if (event.target.id === 'plus' && this.state.updateImage < 4) {
+      console.log('browseImage')
+      console.log(this.state.updateImage)
+      this.setState(state => ({
+        updateImage: state.updateImage + 1
+      }))
+    } else if (event.target.id === 'minus' && this.state.updateImage > 0) {
+      console.log('browseImage')
+      console.log(this.state.updateImage)
+      this.setState(state => ({
+        updateImage: state.updateImage - 1
+      }))
+    }
+  }
+
+  setShow = event => {
+    event.persist()
+    console.log(event.target.id)
+    this.setState({ show: event.target.id })
+  }
+
   render () {
     if (this.state.backToWagger === true) {
       return <Redirect to='/wagger' />
@@ -29,17 +47,32 @@ class FullProfile extends React.Component {
     return (
       <div className='full-view'>
         <div className='quadrant'>
-          <EditProfile />
+          <EditProfile
+            setShow={this.setShow}
+          />
         </div>
         <div className='quadrant'>
-          <p>Q2</p>
+          <MyImages
+            browseImage={this.browseImage.bind(this)}
+            image={this.props.images[this.state.updateImage]}
+          />
         </div>
         <div className='quadrant'>
-          <p>Q3</p>
+          <UpdateProfile
+            updateShow={this.updateShow}
+            show={this.state.show}
+            number={this.state.updateImage}
+            speak={this.props.speak}
+            name={this.props.name}
+          />
         </div>
         <div className='quadrant'>
-          <p>Q4</p>
-          <button style={buttonStyle} onClick={() => this.setState({ backToWagger: true })}>Back to Wagger</button>
+          <BackToWagger
+            setState={this.setState.bind(this)}
+            name={this.props.name}
+            speak={this.props.speak}
+            number={this.state.updateImage}
+          />
         </div>
       </div>
     )

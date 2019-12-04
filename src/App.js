@@ -148,7 +148,9 @@ class App extends React.Component {
               <FullProfile
                 name={this.state.user.name}
                 speak={this.state.user.speak}
-                setUser={this.setStatexc}
+                setUser={this.setState}
+                profile={this.state.user.profile}
+                images={[this.state.user.profile].concat(this.state.user.images)}
               />
             )
           }} />
