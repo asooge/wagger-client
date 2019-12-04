@@ -24,6 +24,7 @@ const AuthForm = (props) => {
 
   const handleInput = (event) => {
     event.persist()
+    console.log(event.target.name)
     const htmlName = event.target.name
     const value = event.target.value
     if (htmlName === 'email') {
@@ -38,7 +39,7 @@ const AuthForm = (props) => {
       setImage(value)
     } else if (htmlName === 'speak') {
       setSpeak(value)
-    } else if (htmlName === 'profile') {
+    } else if (event.target.id === 'profile') {
       setProfile(value)
     }
   }
@@ -135,10 +136,10 @@ const AuthForm = (props) => {
   if (props.user && !props.user.profile) {
     return (
       <div style={authContainer}className='quadrant'>
-        <form name='profile' onSubmit={sendData}>
+        <form name='file' id='profile' onSubmit={sendData}>
           <p>Upload a profile picture, of you and your dog. This will only be visible to your matches.</p>
           <label htmlFor='images'>Your profile: </label>
-          <input type='file' encType='multipart/form-data' onInput={handleInput} name='profile' value={profile} />
+          <input type='file' encType='multipart/form-data' onInput={handleInput} name='profile' id='profile' value={profile} />
           <button>Submit</button>
         </form>
       </div>

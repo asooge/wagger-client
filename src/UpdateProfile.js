@@ -1,7 +1,8 @@
 import React from 'react'
-// const FormData = require('form-data')
+// import { Redirect } from 'react-router-dom'
 import apiConfig from './apiConfig'
 import axios from 'axios'
+const FormData = require('form-data')
 
 const authContainer = {
   display: 'flex',
@@ -48,10 +49,23 @@ class UpdateProfile extends React.Component {
             console.log(res)
             this.props.setUser({ user: res.data.user })
           })
+      } else if (event.target.name === 'file' && this.props.number === 0) {
+        axios.patch(`${apiConfig}/users/${this.props.user}/profile`, new FormData(event.target))
+          .then(res => {
+            console.log(res)
+            this.props.setUser({ user: res.data.user })
+          })
+      } else if (event.target.name === 'file' && this.props.number > 0) {
+        axios.patch(`${apiConfig}/users/${this.props.user}/images/${this.props.number - 1}`, new FormData(event.target))
+          .then(res => {
+            console.log(res)
+            this.props.setUser({ user: res.data.user })
+          })
       }
     }
 
     render () {
+      // if reRender: true, Redirect to '/profile'
       // if show: 'name' return name form
       if (this.props.show === 'name') {
         return (
