@@ -1,10 +1,10 @@
 import React from 'react'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Profile from './Profile'
 import ShowDog from './ShowDog'
 import UserDetail from './UserDetail'
 import DogDetails from './DogDetails'
-import Match from './Match'
+// import Match from './Match'
 import apiConfig from './apiConfig'
 import axios from 'axios'
 
@@ -14,7 +14,9 @@ class Wagger extends React.Component {
     this.state = {
       waggers: props.waggers,
       wag: props.wag,
-      imageIndex: 0
+      imageIndex: 0,
+      instantMatch: false,
+      ref: ''
     }
   }
 
@@ -42,8 +44,11 @@ class Wagger extends React.Component {
           // if response user matches is greater than current user matches
           if (res.data.user.matches.length > this.props.matches.length) {
             console.log('its a match')
+            // const ref = res.data.user.matches[res.data.user.matches.length - 1].reference
+            console.log(res.data.user.matches[res.data.user.matches.length - 1])
             // update user data
-            this.props.setUser({ user: res.data.user })
+            axios(`${apiConfig}/users/${this.props.me}`)
+              .then(this.props.setUser({ user: res.data.user }))
             // return JSX. Redirect to the match component
           } else {
             this.props.setUser({ user: res.data.user })
@@ -81,9 +86,11 @@ class Wagger extends React.Component {
   }
 
   render () {
-    if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference === this.props.waggers[this.props.wag - 1]._id)) {
+    // console.log('last match', this.props.matches[this.props.matches.length - 1].reference._id)
+    // if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
+    if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
       return (
-        <Match user={this.props.matches[this.props.matches.length - 1].reference}/>
+        <Redirect to={`/match/${this.props.matches[this.props.matches.length - 1].reference._id}`} />
       )
     }
     if (!this.props.waggers[this.props.wag]) {
