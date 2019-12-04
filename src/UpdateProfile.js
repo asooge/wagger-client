@@ -61,6 +61,27 @@ class UpdateProfile extends React.Component {
             console.log(res)
             this.props.setUser({ user: res.data.user })
           })
+      } else if (event.target.name === 'password') {
+        if (this.state.newPassword !== this.state.confirmPassword) {
+          console.log('password does not match')
+        } else {
+          const data = {
+            passwords: {
+              old: this.state.oldPassword,
+              new: this.state.newPassword
+            }
+          }
+          axios({
+            method: 'patch',
+            url: `${apiConfig}/change-password`,
+            data: data,
+            headers: { Authorization: `Bearer ${this.props.token}` }
+          })
+            .then(res => {
+              console.log(res)
+              console.log('password updated')
+            })
+        }
       }
     }
 
@@ -111,7 +132,7 @@ class UpdateProfile extends React.Component {
       if (this.props.show === 'password') {
         return (
           <div style={authContainer}className='quadrant'>
-            <form style={formStyle} name='user' onSubmit={this.updateUser}>
+            <form style={formStyle} name='password' type='password' onSubmit={this.updateUser}>
               <label htmlFor='old-pass'>Old Password: </label>
               <input onInput={this.handleInput} name='oldPassword' value={this.state.oldPassword}placeholder='enter your password' />
               <br />
@@ -121,6 +142,7 @@ class UpdateProfile extends React.Component {
               <label htmlFor='confirm-pass'>Confirm: </label>
               <input type='password' onInput={this.handleInput} name='confirmPassword' value={this.state.confirmPassword} placeholder='enter password' />
               <br />
+              <button>Submit</button>
             </form>
           </div>
         )

@@ -67,6 +67,7 @@ class FullProfile extends React.Component {
             user={this.props.user}
             setUser={this.props.setUser}
             setState={this.setState.bind(this)}
+            token={this.props.token}
           />
         </div>
         <div className='quadrant'>

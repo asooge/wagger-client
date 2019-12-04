@@ -152,6 +152,7 @@ class App extends React.Component {
                 setUser={this.setState.bind(this)}
                 profile={this.state.user.profile}
                 images={[this.state.user.profile].concat(this.state.user.images)}
+                token={this.state.user.token}
               />
             )
           }} />
