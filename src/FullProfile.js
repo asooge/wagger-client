@@ -49,6 +49,7 @@ class FullProfile extends React.Component {
         <div className='quadrant'>
           <EditProfile
             setShow={this.setShow}
+            matches={this.props.matches}
           />
         </div>
         <div className='quadrant'>

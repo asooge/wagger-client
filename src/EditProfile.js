@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import AllMatches from './AllMatches'
 
 const buttonStyle = {
   display: 'block',
@@ -8,6 +9,9 @@ const buttonStyle = {
 
 const EditProfile = props => (
   <Fragment>
+    <AllMatches
+      matches={props.matches}
+    />
     <button style={buttonStyle}>see all matches</button>
     <button id='name' onClick={props.setShow} style={buttonStyle}>change name</button>
     <button id='password' onClick={props.setShow} style={buttonStyle}>change password</button>
