@@ -1,6 +1,6 @@
 {
   "name": "wagger",
-  "homepage": "https://github.io/asooge/wagger-client.git",
+  "homepage": "https://asooge.github.io/wagger-client/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
