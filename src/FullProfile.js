@@ -64,6 +64,8 @@ class FullProfile extends React.Component {
             number={this.state.updateImage}
             speak={this.props.speak}
             name={this.props.name}
+            user={this.props.user}
+            setUser={this.props.setUser}
           />
         </div>
         <div className='quadrant'>

@@ -148,7 +148,8 @@ class App extends React.Component {
               <FullProfile
                 name={this.state.user.name}
                 speak={this.state.user.speak}
-                setUser={this.setState}
+                user={this.state.user._id}
+                setUser={this.setState.bind(this)}
                 profile={this.state.user.profile}
                 images={[this.state.user.profile].concat(this.state.user.images)}
               />

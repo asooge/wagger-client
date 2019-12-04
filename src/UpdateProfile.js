@@ -1,5 +1,7 @@
 import React from 'react'
 // const FormData = require('form-data')
+import apiConfig from './apiConfig'
+import axios from 'axios'
 
 const authContainer = {
   display: 'flex',
@@ -19,7 +21,7 @@ class UpdateProfile extends React.Component {
       oldPassword: '',
       newPassword: '',
       confirmPassword: '',
-      name: '',
+      name: this.props.name,
       file: '',
       speak: this.props.speak
     }
@@ -30,12 +32,31 @@ class UpdateProfile extends React.Component {
       this.setState({ [event.target.name]: event.target.value })
     }
 
+    updateUser = event => {
+      event.preventDefault()
+      console.log('update user')
+      console.log(event.target.name)
+      if (event.target.name.name === 'name') {
+        axios.post(`${apiConfig}/users/${this.props.user}/name`, { name: this.state.name })
+          .then(res => {
+            console.log(res)
+            this.props.setUser({ user: res.data.user })
+          })
+      } else if (event.target.name === 'speak') {
+        axios.post(`${apiConfig}/users/${this.props.user}/speak`, { speak: this.state.speak })
+          .then(res => {
+            console.log(res)
+            this.props.setUser({ user: res.data.user })
+          })
+      }
+    }
+
     render () {
       // if show: 'name' return name form
       if (this.props.show === 'name') {
         return (
           <div style={authContainer}className='quadrant'>
-            <form name='name' onSubmit={this.sendData}>
+            <form name='name' onSubmit={this.updateUser}>
               <label htmlFor='name'>What is your dog name?</label>
               <br />
               <input onInput={this.handleInput} name='name' value={this.state.name} placeholder='enter your dog name' />
@@ -48,7 +69,7 @@ class UpdateProfile extends React.Component {
       if (this.props.show === 'image') {
         return (
           <div style={authContainer}className='quadrant'>
-            <form name='file' onSubmit={this.sendData}>
+            <form name='file' onSubmit={this.updateUser}>
               <h3>Update your profile and dog images</h3>
               <label htmlFor='images'>Update photo: {this.props.number}</label>
               <br />
@@ -62,7 +83,7 @@ class UpdateProfile extends React.Component {
       if (this.props.show === 'speak') {
         return (
           <div style={authContainer}className='quadrant'>
-            <form name='speak' onSubmit={this.sendData}>
+            <form name='speak' onSubmit={this.updateUser}>
               <p>Say something about your dog. Limit 300 characters.</p>
               <label htmlFor='speak'>Speak: </label>
               <br />
@@ -76,7 +97,7 @@ class UpdateProfile extends React.Component {
       if (this.props.show === 'password') {
         return (
           <div style={authContainer}className='quadrant'>
-            <form style={formStyle} name='user' onSubmit={this.sendData}>
+            <form style={formStyle} name='user' onSubmit={this.updateUser}>
               <label htmlFor='old-pass'>Old Password: </label>
               <input onInput={this.handleInput} name='oldPassword' value={this.state.oldPassword}placeholder='enter your password' />
               <br />
