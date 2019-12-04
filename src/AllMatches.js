@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 const boxStyle = {
   border: 'solid black 1px',
@@ -28,4 +28,4 @@ const AllMatches = props => {
   )
 }
 
-export default AllMatches
+export default withRouter(AllMatches)

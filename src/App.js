@@ -162,7 +162,9 @@ class App extends React.Component {
               return <Redirect to='/' />
             }
             return (
-              <Match />
+              <Match
+                matches={this.state.user.matches}
+              />
             )
           }} />
         </div>
