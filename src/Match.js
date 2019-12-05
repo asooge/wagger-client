@@ -97,14 +97,15 @@ class Match extends React.Component {
           <div id='plus' className='next-image' onClick={this.browseImage} />
         </div>
         <div className='quadrant'>
-          <button style={buttonStyle} onClick={() => this.setState({ toWagger: true })}>Back to Wagger</button>
           <button style={buttonStyle} onClick={() => this.setState({ toProfile: true })}>Back to Profile</button>
+          <button style={buttonStyle} onClick={() => this.setState({ toWagger: true })}>Back to Wagger</button>
         </div>
         <div className='quadrant'>
           <Messages
             data={this.matchObject}
             me={this.props.me}
             setUser={this.props.setUser}
+            token={this.props.token}
           />
         </div>
       </div>

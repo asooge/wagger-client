@@ -18,7 +18,15 @@ class Messages extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    axios.post(`${apiConfig}/users/${this.props.me}/matches/${this.props.data.reference._id}/messages`, { text: this.state.text })
+    axios({
+      method: 'post',
+      url: `${apiConfig}/users/${this.props.me}/matches/${this.props.data.reference._id}/messages`,
+      headers: {
+        Authorization: `Bearer ${this.props.token}`
+      },
+      data: { text: this.state.text }
+    })
+    // axios.post(`${apiConfig}/users/${this.props.me}/matches/${this.props.data.reference._id}/messages`, { text: this.state.text })
       .then(res => {
         this.setState({ text: '' })
         this.props.setUser({ user: res.data.user })
