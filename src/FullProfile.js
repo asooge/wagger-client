@@ -18,16 +18,11 @@ class FullProfile extends React.Component {
 
   browseImage = event => {
     event.persist()
-    console.log(event.target.id)
     if (event.target.id === 'plus' && this.state.updateImage < 4) {
-      console.log('browseImage')
-      console.log(this.state.updateImage)
       this.setState(state => ({
         updateImage: state.updateImage + 1
       }))
     } else if (event.target.id === 'minus' && this.state.updateImage > 0) {
-      console.log('browseImage')
-      console.log(this.state.updateImage)
       this.setState(state => ({
         updateImage: state.updateImage - 1
       }))
@@ -36,7 +31,6 @@ class FullProfile extends React.Component {
 
   setShow = event => {
     event.persist()
-    console.log(event.target.id)
     this.setState({ show: event.target.id })
   }
 

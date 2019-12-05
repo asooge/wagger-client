@@ -7,18 +7,6 @@ const imageStyle = {
   margin: 'auto'
 }
 
-// const nextStyle = {
-//   height: '268px',
-//   width: '237px',
-//   opacity: '0%',
-//   backgroundColor: 'blue',
-//   display: 'inline-block',
-//   border: 'solid black 2px',
-//   position: 'relative',
-//   bottom: '268px',
-//   zIndex: '10'
-// }
-
 const ShowDog = props => {
   if (props.needBones) {
     return (

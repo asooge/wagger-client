@@ -20,7 +20,7 @@ class Messages extends React.Component {
     event.preventDefault()
     axios.post(`${apiConfig}/users/${this.props.me}/matches/${this.props.data.reference._id}/messages`, { text: this.state.text })
       .then(res => {
-        console.log(res)
+        this.setState({ text: '' })
         this.props.setUser({ user: res.data.user })
       })
   }

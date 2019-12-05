@@ -34,8 +34,6 @@ class UpdateProfile extends React.Component {
 
     updateUser = event => {
       event.preventDefault()
-      console.log('update user')
-      console.log(event.target.name)
       if (event.target.name.name === 'name') {
         axios.post(`${apiConfig}/users/${this.props.user}/name`, { name: this.state.name })
           .then(res => {
@@ -90,8 +88,6 @@ class UpdateProfile extends React.Component {
           headers: { Authorization: `Bearer ${this.props.token}` }
         })
           .then(res => {
-            console.log(res)
-            console.log('password updated')
             this.setState({ oldPassword: '', newPassword: '', confirmPassword: '' })
             this.props.showMessage('password-success')
           })

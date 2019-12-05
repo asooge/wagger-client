@@ -32,8 +32,6 @@ class Match extends React.Component {
     }
   }
   componentDidMount () {
-    console.log(this.props.match.params.id)
-    console.log(this.props)
     this.props.setUser({ instantMatch: false })
   }
   matchObject = this.props.matches.find(match => match.reference._id === this.props.match.params.id)
@@ -50,7 +48,6 @@ class Match extends React.Component {
       data: { match: this.matchObject.reference._id }
     })
       .then(res => {
-        console.log(res)
         axios({
           method: 'get',
           url: `${apiConfig}/users/${this.props.me}`,
@@ -60,7 +57,6 @@ class Match extends React.Component {
         })
         // axios(`${apiConfig}/users/${this.props.me}`)
           .then(res => {
-            console.log(res)
             this.props.showMessage('delete-match')
             this.props.setUser({ user: res.data.user })
           })
@@ -70,24 +66,17 @@ class Match extends React.Component {
 
   browseImage = event => {
     event.persist()
-    console.log(event.target.id)
     if (event.target.id === 'plus' && this.state.imageIndex < 4) {
-      console.log('browseImage')
-      console.log(this.state.updateImage)
       this.setState(state => ({
         imageIndex: state.imageIndex + 1
       }))
     } else if (event.target.id === 'minus' && this.state.imageIndex > 0) {
-      console.log('browseImage')
-      console.log(this.state.imageIndex)
       this.setState(state => ({
         imageIndex: state.imageIndex - 1
       }))
     }
   }
   render () {
-    console.log(this.matchObject)
-    console.log(this.matchImages)
     if (this.state.toWagger) {
       return <Redirect to='/wagger' />
     }

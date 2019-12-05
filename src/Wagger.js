@@ -30,9 +30,7 @@ class Wagger extends React.Component {
     })
     // axios(`${apiConfig}/wagger/${this.props.me}`)
       .then(res => {
-        console.log('see waggers:', res)
         this.props.setUser({ user: res.data.user })
-        console.log('wheres the new dog')
       })
       .catch(console.error)
   }
@@ -60,13 +58,9 @@ class Wagger extends React.Component {
           Authorization: `Bearer ${this.props.token}`
         }
       })
-      // axios.patch(`${apiConfig}/users/${this.props.me}/likes/${this.props.waggers[this.props.wag]._id}`)
         .then(res => {
           // if response user matches is greater than current user matches
           if (res.data.user.matches.length > this.props.matches.length) {
-            console.log('its a match')
-            // const ref = res.data.user.matches[res.data.user.matches.length - 1].reference
-            console.log(res.data.user.matches[res.data.user.matches.length - 1])
             // update user data
             axios({
               method: 'get',
@@ -75,7 +69,6 @@ class Wagger extends React.Component {
                 Authorization: `Bearer ${this.props.token}`
               }
             })
-            // axios(`${apiConfig}/users/${this.props.me}`)
               .then(this.props.setUser({ user: res.data.user }))
             // return JSX. Redirect to the match component
           } else {
@@ -87,12 +80,11 @@ class Wagger extends React.Component {
 
     // if wag index is less than 4. Console log
     if (this.props.wag < 4) {
-      console.log('wag')
+      // console.log('wag')
 
       // otherwise return JSX
       // wagger array is only length: 5
     } else {
-      console.log('got bones...?')
       this.props.shuffleDog()
       this.props.setUser({ needBones: true })
     }
@@ -115,8 +107,6 @@ class Wagger extends React.Component {
   }
 
   render () {
-    // console.log('last match', this.props.matches[this.props.matches.length - 1].reference._id)
-    // if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
     if (this.props.wag > 0 && this.props.wag <= 5 && this.props.instantMatch && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
       return (
         <Redirect to={`/match/${this.props.matches[this.props.matches.length - 1].reference._id}`} />

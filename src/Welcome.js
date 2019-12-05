@@ -2,7 +2,6 @@ import React from 'react'
 
 const Welcome = (props) => {
   // const heyThere = (<p>Hey, {props.user.name}</p>)
-  console.log(props)
   if (props.user) {
     return (
       <div className='quadrant'>

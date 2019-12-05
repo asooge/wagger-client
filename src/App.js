@@ -49,9 +49,7 @@ class App extends React.Component {
   }
 
   updateDog = () => {
-    console.log('update successful')
     const randNum = Math.floor(Math.random() * this.state.randogs.length)
-    console.log(randNum)
     this.setState({ currentDog: this.state.randogs[randNum] })
   }
   updateSignIn = (event) => {
@@ -74,7 +72,6 @@ class App extends React.Component {
   }
 
   makeAxios = (data) => {
-    console.log(data)
     // create name for dog
     if (data.name) {
       axios.post(`${apiConfig}/users/${this.state.user._id}/name`, data)
@@ -92,7 +89,6 @@ class App extends React.Component {
         })
         .catch(() => this.showMessage('image'))
     } else if (this.state.user) {
-      console.log('image submit')
       axios.post(`${apiConfig}/users/${this.state.user._id}/images/${this.state.user.images.length}`, data)
         .then(res => {
           clearInterval(this.shuffleDog)
@@ -149,12 +145,10 @@ class App extends React.Component {
       setTimeout(() => this.setState({ passwordSuccess: false }), 3000)
     }
     if (message === 'sign-out-success') {
-      console.log('sign out success')
       this.setState({ signOutSuccess: true })
       setTimeout(() => this.setState({ signOutSuccess: false }), 3000)
     }
     if (message === 'delete-match') {
-      console.log('match deleted')
       this.setState({ deletedMatch: true })
       setTimeout(() => this.setState({ deletedMatch: false }), 3000)
     }
