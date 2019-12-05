@@ -17,7 +17,7 @@ const EditProfile = props => (
     <button id='password' onClick={props.setShow} style={buttonStyle}>change password</button>
     <button id='image' onClick={props.setShow} style={buttonStyle}>update image</button>
     <button id='speak' onClick={props.setShow} style={buttonStyle}>update speak</button>
-    <button id='sign-out' onClick={props.setShow} style={buttonStyle}>sign out</button>
+    <button id='sign-out' onClick={props.signOut} style={buttonStyle}>sign out</button>
   </Fragment>
 )
 

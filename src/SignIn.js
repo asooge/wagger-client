@@ -22,12 +22,20 @@ const styles = {
 }
 
 const SignIn = (props) => {
-  return (
-    <div style={{ margin: 'auto' }} className='quadrant'>
-      <button name='sign-in' onClick={props.updateSignIn} style={styles.signIn}>Sign In</button>
-      <button name='sign-up' onClick={props.updateSignIn} style={styles.signUp} >Sign Up</button>
-    </div>
-  )
+  if (!props.user) {
+    return (
+      <div style={{ margin: 'auto' }} className='quadrant'>
+        <button name='sign-in' onClick={props.updateSignIn} style={styles.signIn}>Sign In</button>
+        <button name='sign-up' onClick={props.updateSignIn} style={styles.signUp} >Sign Up</button>
+      </div>
+    )
+  } else {
+    return (
+      <div style={{ margin: 'auto' }} className='quadrant'>
+        <button name='sign-out' onClick={props.signOut} style={styles.signIn}>Sign Out</button>
+      </div>
+    )
+  }
 }
 
 export default SignIn

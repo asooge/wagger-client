@@ -50,6 +50,7 @@ class FullProfile extends React.Component {
           <EditProfile
             setShow={this.setShow}
             matches={this.props.matches}
+            signOut={this.props.signOut}
           />
         </div>
         <div className='quadrant'>

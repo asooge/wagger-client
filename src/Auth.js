@@ -8,6 +8,8 @@ const Auth = (props) => {
     <Fragment>
       <SignIn
         updateSignIn={props.updateSignIn}
+        user={props.user}
+        signOut={props.signOut}
       />
       <AuthForm
         signIn={props.signIn}

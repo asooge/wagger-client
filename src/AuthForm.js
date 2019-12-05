@@ -153,7 +153,7 @@ const AuthForm = (props) => {
     <div style={authContainer}className='quadrant'>
       <form style={formStyle} name='user' onSubmit={sendData}>
         <label htmlFor='email'>Email: </label>
-        <input onInput={handleInput} name='email' value={email}placeholder='enter email' />
+        <input onInput={handleInput} name='email' value={email} placeholder='enter email' />
         <br />
         <label htmlFor='password'>Password: </label>
         <input type='password' onInput={handleInput} name='password' value={password} placeholder='enter password' />

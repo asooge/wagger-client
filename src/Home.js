@@ -15,6 +15,7 @@ const Home = props => {
         makeAxios={props.makeAxios}
         updateSignIn={props.updateSignIn}
         showMessage={props.showMessage}
+        signOut={props.signOut}
       />
     </div>
   )

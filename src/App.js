@@ -28,6 +28,8 @@ class App extends React.Component {
       requestFail: false,
       signOutFail: false,
       imageFail: false,
+      passwordSuccess: false,
+      signOutSuccess: false,
       instantMatch: true
     }
   }
@@ -55,6 +57,20 @@ class App extends React.Component {
     this.setState({ signIn: event.target.name })
   }
   shuffleDog = () => setInterval(() => this.updateDog(), 12000)
+
+  signOut = () => {
+    axios({
+      method: 'delete',
+      url: `${apiConfig}/sign-out`,
+      headers: {
+        Authorization: `Bearer ${this.state.user.token}`
+      }
+    })
+      .then(() => {
+        this.setState({ user: null })
+        this.showMessage('sign-out-success')
+      })
+  }
 
   makeAxios = (data) => {
     console.log(data)
@@ -127,6 +143,15 @@ class App extends React.Component {
       this.setState({ imageFail: true })
       setTimeout(() => this.setState({ imageFail: false }), 3000)
     }
+    if (message === 'password-success') {
+      this.setState({ passwordSuccess: true })
+      setTimeout(() => this.setState({ passwordSuccess: false }), 3000)
+    }
+    if (message === 'sign-out-success') {
+      console.log('sign out success')
+      this.setState({ signOutSuccess: true })
+      setTimeout(() => this.setState({ signOutSuccess: false }), 3000)
+    }
   }
   render () {
     if (this.state.signInFail) {
@@ -135,6 +160,10 @@ class App extends React.Component {
       this.footerJsx = (<h1 className='fail'>Sign up failed</h1>)
     } else if (this.state.requestFail) {
       this.footerJsx = (<h1 className='fail'>Request failed</h1>)
+    } else if (this.state.passwordSuccess) {
+      this.footerJsx = (<h1 className='success'>Password updated</h1>)
+    } else if (this.state.signOutSuccess) {
+      this.footerJsx = (<h1 className='fail'>Signed out</h1>)
     } else {
       this.footerJsx = (<h1>You found Wagger</h1>)
     }
@@ -154,6 +183,7 @@ class App extends React.Component {
               makeAxios={this.makeAxios}
               updateSignIn={this.updateSignIn}
               showMessage={this.showMessage}
+              signOut={this.signOut}
             />)
           }
           } />
@@ -194,6 +224,7 @@ class App extends React.Component {
                 token={this.state.user.token}
                 matches={this.state.user.matches}
                 showMessage={this.showMessage}
+                signOut={this.signOut}
               />
             )
           }} />

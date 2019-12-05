@@ -29,7 +29,6 @@ class UpdateProfile extends React.Component {
   }
     handleInput = (event) => {
       event.persist()
-      console.log(event.target.name)
       this.setState({ [event.target.name]: event.target.value })
     }
 
@@ -40,53 +39,66 @@ class UpdateProfile extends React.Component {
       if (event.target.name.name === 'name') {
         axios.post(`${apiConfig}/users/${this.props.user}/name`, { name: this.state.name })
           .then(res => {
-            console.log(res)
+            this.setState({ name: '' })
             this.props.setUser({ user: res.data.user })
           })
-          .catch(this.props.showMessage('request'))
+          .catch(() => {
+            this.setState({ name: '' })
+            this.props.showMessage('request')
+          })
       } else if (event.target.name === 'speak') {
         axios.post(`${apiConfig}/users/${this.props.user}/speak`, { speak: this.state.speak })
           .then(res => {
-            console.log(res)
+            this.setState({ speak: '' })
             this.props.setUser({ user: res.data.user })
           })
-          .catch(this.props.showMessage('request'))
+          .catch(() => {
+            this.setState({ speak: '' })
+            this.props.showMessage('request')
+          })
       } else if (event.target.name === 'file' && this.props.number === 0) {
         axios.patch(`${apiConfig}/users/${this.props.user}/profile`, new FormData(event.target))
           .then(res => {
-            console.log(res)
+            this.setState({ file: '' })
             this.props.setUser({ user: res.data.user })
           })
-          .catch(this.props.showMessage('image'))
+          .catch(() => {
+            this.setState({ file: '' })
+            this.props.showMessage('image')
+          })
       } else if (event.target.name === 'file' && this.props.number > 0) {
         axios.patch(`${apiConfig}/users/${this.props.user}/images/${this.props.number - 1}`, new FormData(event.target))
           .then(res => {
-            console.log(res)
+            this.setState({ file: '' })
             this.props.setUser({ user: res.data.user })
           })
-          .catch(this.props.showMessage('image'))
-      } else if (event.target.name === 'password') {
-        if (this.state.newPassword !== this.state.confirmPassword) {
-          this.props.showMessage('request')
-        } else {
-          const data = {
-            passwords: {
-              old: this.state.oldPassword,
-              new: this.state.newPassword
-            }
-          }
-          axios({
-            method: 'patch',
-            url: `${apiConfig}/change-password`,
-            data: data,
-            headers: { Authorization: `Bearer ${this.props.token}` }
+          .catch(() => {
+            this.setState({ file: '' })
+            this.props.showMessage('image')
           })
-            .then(res => {
-              console.log(res)
-              console.log('password updated')
-            })
-            .catch(this.props.showMessage('request'))
+      } else if (event.target.name === 'password') {
+        const data = {
+          passwords: {
+            old: this.state.oldPassword,
+            new: this.state.newPassword
+          }
         }
+        axios({
+          method: 'patch',
+          url: `${apiConfig}/change-password`,
+          data: data,
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
+          .then(res => {
+            console.log(res)
+            console.log('password updated')
+            this.setState({ oldPassword: '', newPassword: '', confirmPassword: '' })
+            this.props.showMessage('password-success')
+          })
+          .catch(() => {
+            this.setState({ oldPassword: '', newPassword: '', confirmPassword: '' })
+            this.props.showMessage('request')
+          })
       }
     }
 
@@ -137,9 +149,9 @@ class UpdateProfile extends React.Component {
       if (this.props.show === 'password') {
         return (
           <div style={authContainer}className='quadrant'>
-            <form style={formStyle} name='password' type='password' onSubmit={this.updateUser}>
+            <form style={formStyle} name='password' onSubmit={this.updateUser}>
               <label htmlFor='old-pass'>Old Password: </label>
-              <input onInput={this.handleInput} name='oldPassword' value={this.state.oldPassword}placeholder='enter your password' />
+              <input onInput={this.handleInput} name='oldPassword' type='password' value={this.state.oldPassword} placeholder='enter your password' />
               <br />
               <label htmlFor='new-pass'>New Password: </label>
               <input type='password' onInput={this.handleInput} name='newPassword' value={this.state.newPassword}placeholder='enter email' />
