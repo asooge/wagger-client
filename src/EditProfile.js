@@ -12,7 +12,6 @@ const EditProfile = props => (
     <AllMatches
       matches={props.matches}
     />
-    <button style={buttonStyle}>see all matches</button>
     <button id='name' onClick={props.setShow} style={buttonStyle}>change name</button>
     <button id='password' onClick={props.setShow} style={buttonStyle}>change password</button>
     <button id='image' onClick={props.setShow} style={buttonStyle}>update image</button>
