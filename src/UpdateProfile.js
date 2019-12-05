@@ -43,27 +43,31 @@ class UpdateProfile extends React.Component {
             console.log(res)
             this.props.setUser({ user: res.data.user })
           })
+          .catch(this.props.showMessage('request'))
       } else if (event.target.name === 'speak') {
         axios.post(`${apiConfig}/users/${this.props.user}/speak`, { speak: this.state.speak })
           .then(res => {
             console.log(res)
             this.props.setUser({ user: res.data.user })
           })
+          .catch(this.props.showMessage('request'))
       } else if (event.target.name === 'file' && this.props.number === 0) {
         axios.patch(`${apiConfig}/users/${this.props.user}/profile`, new FormData(event.target))
           .then(res => {
             console.log(res)
             this.props.setUser({ user: res.data.user })
           })
+          .catch(this.props.showMessage('image'))
       } else if (event.target.name === 'file' && this.props.number > 0) {
         axios.patch(`${apiConfig}/users/${this.props.user}/images/${this.props.number - 1}`, new FormData(event.target))
           .then(res => {
             console.log(res)
             this.props.setUser({ user: res.data.user })
           })
+          .catch(this.props.showMessage('image'))
       } else if (event.target.name === 'password') {
         if (this.state.newPassword !== this.state.confirmPassword) {
-          console.log('password does not match')
+          this.props.showMessage('request')
         } else {
           const data = {
             passwords: {
@@ -81,6 +85,7 @@ class UpdateProfile extends React.Component {
               console.log(res)
               console.log('password updated')
             })
+            .catch(this.props.showMessage('request'))
         }
       }
     }

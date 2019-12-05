@@ -1,5 +1,6 @@
 import React from 'react'
 import { Redirect, withRouter } from 'react-router-dom'
+import Messages from './Messages'
 
 const imageStyle = {
   height: '268px',
@@ -31,6 +32,7 @@ class Match extends React.Component {
   componentDidMount () {
     console.log(this.props.match.params.id)
     console.log(this.props)
+    this.props.setUser({ instantMatch: false })
   }
   matchObject = this.props.matches.find(match => match.reference._id === this.props.match.params.id)
 
@@ -77,6 +79,13 @@ class Match extends React.Component {
         <div className='quadrant'>
           <button style={buttonStyle} onClick={() => this.setState({ toWagger: true })}>Back to Wagger</button>
           <button style={buttonStyle} onClick={() => this.setState({ toProfile: true })}>Back to Profile</button>
+        </div>
+        <div className='quadrant'>
+          <Messages
+            data={this.matchObject}
+            me={this.props.me}
+            setUser={this.props.setUser}
+          />
         </div>
       </div>
     )

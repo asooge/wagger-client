@@ -1,18 +1,11 @@
 import React from 'react'
-import { Route, Link, Redirect } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import Wagger from './Wagger'
 import Home from './Home'
 import Match from './Match'
 import FullProfile from './FullProfile'
 import apiConfig from './apiConfig'
 import axios from 'axios'
-
-const Dashboard = () => (
-  <div>
-    <h3>Dashboard</h3>
-    <p>This is separate route.</p>
-  </div>
-)
 
 class App extends React.Component {
   constructor () {
@@ -29,7 +22,13 @@ class App extends React.Component {
       signIn: null,
       randogs: [],
       currentDog: null,
-      needBones: false
+      needBones: false,
+      signInFail: false,
+      signUpFail: false,
+      requestFail: false,
+      signOutFail: false,
+      imageFail: false,
+      instantMatch: true
     }
   }
   componentDidMount () {
@@ -41,7 +40,7 @@ class App extends React.Component {
         const randNum = Math.floor(Math.random() * dogUrls.length)
         this.setState({ currentDog: dogUrls[randNum] })
         this.setState({ randogs: dogUrls })
-        // const shuffleDog = setInterval(() => this.updateDog(), 12000)
+        this.shuffleDog()
       })
       .catch(console.error)
   }
@@ -63,16 +62,18 @@ class App extends React.Component {
     if (data.name) {
       axios.post(`${apiConfig}/users/${this.state.user._id}/name`, data)
         .then(res => this.setState({ user: res.data.user }))
-        .catch(console.error)
+        .catch(() => this.showMessage('request'))
     } else if (data.speak) {
       axios.post(`${apiConfig}/users/${this.state.user._id}/speak`, data)
         .then(res => this.setState({ user: res.data.user }))
+        .catch(() => this.showMessage('request'))
     } else if (this.state.user && this.state.user.images.length === 4) {
       axios.post(`${apiConfig}/users/${this.state.user._id}/profile`, data)
         .then(res => {
           clearInterval(this.shuffleDog)
           this.setState({ user: res.data.user, currentDog: res.data.user.profile })
         })
+        .catch(() => this.showMessage('image'))
     } else if (this.state.user) {
       console.log('image submit')
       axios.post(`${apiConfig}/users/${this.state.user._id}/images/${this.state.user.images.length}`, data)
@@ -80,7 +81,7 @@ class App extends React.Component {
           clearInterval(this.shuffleDog)
           this.setState({ user: res.data.user, currentDog: res.data.user.images[res.data.user.images.length - 1] })
         })
-        .catch(console.error)
+        .catch(() => this.showMessage('image'))
     } else if (this.state.signIn === 'sign-in') {
       axios.post(`${apiConfig}/sign-in`, data)
         .then(res => {
@@ -90,25 +91,60 @@ class App extends React.Component {
             this.setState({ user: res.data.user })
           }
         })
-        .catch(console.error)
+        .catch(() => {
+          this.showMessage('sign-in')
+        })
     } else if (this.state.signIn === 'sign-up') {
       axios.post(`${apiConfig}/sign-up`, data)
         .then(res => {
           this.setState({ signIn: 'sign-in' })
           this.makeAxios(data)
         })
-        .catch(console.error)
+        .catch(() => {
+          this.showMessage('sign-up')
+        })
+    }
+  }
+  footerJsx = (<h1>You found Wagger</h1>)
+  showMessage = (message) => {
+    if (message === 'sign-in') {
+      this.setState({ signInFail: true })
+      setTimeout(() => this.setState({ signInFail: false }), 3000)
+    }
+    if (message === 'sign-up') {
+      this.setState({ signUpFail: true })
+      setTimeout(() => this.setState({ signUpFail: false }), 3000)
+    }
+    if (message === 'sign-out') {
+      this.setState({ signOutFail: true })
+      setTimeout(() => this.setState({ signOutFail: false }), 3000)
+    }
+    if (message === 'request') {
+      this.setState({ requestFail: true })
+      setTimeout(() => this.setState({ requestFail: false }), 3000)
+    }
+    if (message === 'image') {
+      this.setState({ imageFail: true })
+      setTimeout(() => this.setState({ imageFail: false }), 3000)
     }
   }
   render () {
+    if (this.state.signInFail) {
+      this.footerJsx = (<h1 className='fail'>Sign in failed</h1>)
+    } else if (this.state.signUpFail) {
+      this.footerJsx = (<h1 className='fail'>Sign up failed</h1>)
+    } else if (this.state.requestFail) {
+      this.footerJsx = (<h1 className='fail'>Request failed</h1>)
+    } else {
+      this.footerJsx = (<h1>You found Wagger</h1>)
+    }
     return (
       <div>
-        <nav>
-          <Link to="/dashboard">Dashboard</Link>
-        </nav>
+        <div className='header'>
+          <h1>Wagger</h1>
+        </div>
 
         <div>
-          <Route path="/dashboard" component={Dashboard}/>
           <Route exact path="/" render={() => {
             return (<Home
               user={this.state.user}
@@ -117,6 +153,7 @@ class App extends React.Component {
               auth={this.state.auth}
               makeAxios={this.makeAxios}
               updateSignIn={this.updateSignIn}
+              showMessage={this.showMessage}
             />)
           }
           } />
@@ -137,6 +174,7 @@ class App extends React.Component {
                 waggers={this.state.user.waggers}
                 wag={this.state.user.wag}
                 needBones={this.state.needBones}
+                instantMatch={this.state.instantMatch}
               />
             )
           }} />
@@ -154,6 +192,7 @@ class App extends React.Component {
                 images={[this.state.user.profile].concat(this.state.user.images)}
                 token={this.state.user.token}
                 matches={this.state.user.matches}
+                showMessage={this.showMessage}
               />
             )
           }} />
@@ -164,11 +203,15 @@ class App extends React.Component {
             return (
               <Match
                 matches={this.state.user.matches}
+                me={this.state.user._id}
+                setUser={this.setState.bind(this)}
               />
             )
           }} />
         </div>
-
+        <div className='footer'>
+          {this.footerJsx}
+        </div>
       </div>
     )
   }

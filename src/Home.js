@@ -14,6 +14,7 @@ const Home = props => {
         user={props.user}
         makeAxios={props.makeAxios}
         updateSignIn={props.updateSignIn}
+        showMessage={props.showMessage}
       />
     </div>
   )

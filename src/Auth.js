@@ -14,6 +14,7 @@ const Auth = (props) => {
         auth={props.auth}
         user={props.user}
         makeAxios={props.makeAxios}
+        showMessage={props.showMessage}
       />
     </Fragment>
   )

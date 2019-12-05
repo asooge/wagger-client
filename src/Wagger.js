@@ -55,6 +55,7 @@ class Wagger extends React.Component {
           }
         })
     }
+    this.props.setUser({ instantMatch: true })
 
     // if wag index is less than 4. Console log
     if (this.props.wag < 4) {
@@ -88,7 +89,7 @@ class Wagger extends React.Component {
   render () {
     // console.log('last match', this.props.matches[this.props.matches.length - 1].reference._id)
     // if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
-    if (this.props.wag > 0 && this.props.wag <= 5 && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
+    if (this.props.wag > 0 && this.props.wag <= 5 && this.props.instantMatch && this.props.matches.find(match => match.reference._id === this.props.waggers[this.props.wag - 1]._id)) {
       return (
         <Redirect to={`/match/${this.props.matches[this.props.matches.length - 1].reference._id}`} />
       )
