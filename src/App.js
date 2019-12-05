@@ -30,6 +30,7 @@ class App extends React.Component {
       imageFail: false,
       passwordSuccess: false,
       signOutSuccess: false,
+      deletedMatch: false,
       instantMatch: true
     }
   }
@@ -152,6 +153,11 @@ class App extends React.Component {
       this.setState({ signOutSuccess: true })
       setTimeout(() => this.setState({ signOutSuccess: false }), 3000)
     }
+    if (message === 'delete-match') {
+      console.log('match deleted')
+      this.setState({ deletedMatch: true })
+      setTimeout(() => this.setState({ deletedMatch: false }), 3000)
+    }
   }
   render () {
     if (this.state.signInFail) {
@@ -164,6 +170,8 @@ class App extends React.Component {
       this.footerJsx = (<h1 className='success'>Password updated</h1>)
     } else if (this.state.signOutSuccess) {
       this.footerJsx = (<h1 className='fail'>Signed out</h1>)
+    } else if (this.state.deletedMatch) {
+      this.footerJsx = (<h1 className='success'>Match deleted</h1>)
     } else {
       this.footerJsx = (<h1>You found Wagger</h1>)
     }
@@ -206,6 +214,7 @@ class App extends React.Component {
                 needBones={this.state.needBones}
                 instantMatch={this.state.instantMatch}
                 time={this.state.user.lastPull}
+                token={this.state.user.token}
               />
             )
           }} />
@@ -237,6 +246,8 @@ class App extends React.Component {
                 matches={this.state.user.matches}
                 me={this.state.user._id}
                 setUser={this.setState.bind(this)}
+                token={this.state.user.token}
+                showMessage={this.showMessage}
               />
             )
           }} />

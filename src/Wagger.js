@@ -21,7 +21,14 @@ class Wagger extends React.Component {
   }
 
   componentDidMount () {
-    axios(`${apiConfig}/wagger/${this.props.me}`)
+    axios({
+      method: 'get',
+      url: `${apiConfig}/wagger/${this.props.me}`,
+      headers: {
+        Authorization: `Bearer ${this.props.token}`
+      }
+    })
+    // axios(`${apiConfig}/wagger/${this.props.me}`)
       .then(res => {
         console.log('see waggers:', res)
         this.props.setUser({ user: res.data.user })
@@ -34,12 +41,26 @@ class Wagger extends React.Component {
     // if event.target.name === 'no'
     if (event.target.name === 'no') {
       // sent the api post request to '/wagger/:id'
-      axios.post(`${apiConfig}/wagger/${this.props.me}`)
+      axios({
+        method: 'post',
+        url: `${apiConfig}/wagger/${this.props.me}`,
+        headers: {
+          Authorization: `Bearer ${this.props.token}`
+        }
+      })
+      // axios.post(`${apiConfig}/wagger/${this.props.me}`)
         .then(res => this.props.setUser({ user: res.data.user }))
         .catch(console.error)
     } else if (event.target.name === 'yes') {
       // send post request '/wagger/:id'
-      axios.patch(`${apiConfig}/users/${this.props.me}/likes/${this.props.waggers[this.props.wag]._id}`)
+      axios({
+        method: 'patch',
+        url: `${apiConfig}/users/${this.props.me}/likes/${this.props.waggers[this.props.wag]._id}`,
+        headers: {
+          Authorization: `Bearer ${this.props.token}`
+        }
+      })
+      // axios.patch(`${apiConfig}/users/${this.props.me}/likes/${this.props.waggers[this.props.wag]._id}`)
         .then(res => {
           // if response user matches is greater than current user matches
           if (res.data.user.matches.length > this.props.matches.length) {

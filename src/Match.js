@@ -1,6 +1,8 @@
 import React from 'react'
 import { Redirect, withRouter } from 'react-router-dom'
 import Messages from './Messages'
+import axios from 'axios'
+import apiConfig from './apiConfig'
 
 const imageStyle = {
   height: '268px',
@@ -38,6 +40,27 @@ class Match extends React.Component {
 
   matchImages = [this.matchObject.reference.profile].concat(this.matchObject.reference.images)
 
+  deleteMatch = () => {
+    axios({
+      method: 'delete',
+      url: `${apiConfig}/users/${this.props.me}/matches`,
+      headers: {
+        Authorization: `Bearer ${this.props.token}`
+      },
+      data: { match: this.matchObject.reference._id }
+    })
+      .then(res => {
+        console.log(res)
+        axios(`${apiConfig}/users/${this.props.me}`)
+          .then(res => {
+            console.log(res)
+            this.props.showMessage('delete-match')
+            this.props.setUser({ user: res.data.user })
+          })
+      })
+      .catch(console.error)
+  }
+
   browseImage = event => {
     event.persist()
     console.log(event.target.id)
@@ -70,6 +93,7 @@ class Match extends React.Component {
           <h1>Its a match!</h1>
           <h1 style={{ display: 'inline-block' }}>{this.matchObject.reference.name}</h1>
           <p>{this.matchObject.reference.speak}</p>
+          <button onClick={this.deleteMatch}>Permanently delete match forever</button>
         </div>
         <div className='quadrant'>
           <img style={imageStyle} src={this.matchImages[this.state.imageIndex]} />
