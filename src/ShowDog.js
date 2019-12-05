@@ -24,7 +24,6 @@ const ShowDog = props => {
     return (
       <div className = 'quadrant'>
         <img src={props.currentDog} style={imageStyle}/>
-        <button onClick={props.nextDog}>next</button>
       </div>
     )
   } else {

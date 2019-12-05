@@ -175,6 +175,7 @@ class App extends React.Component {
                 wag={this.state.user.wag}
                 needBones={this.state.needBones}
                 instantMatch={this.state.instantMatch}
+                time={this.state.user.lastPull}
               />
             )
           }} />

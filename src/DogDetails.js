@@ -1,8 +1,9 @@
 import React from 'react'
+import Bones from './Bones'
 
 const DogDetails = props => {
   if (props.needBones) {
-    return (<h1>Throw me a bone</h1>)
+    return (<Bones time={props.time}/>)
   } else {
     return (
       <div className='quadrant'>

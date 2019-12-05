@@ -111,6 +111,7 @@ class Wagger extends React.Component {
           <div className='quadrant'>
             <DogDetails
               needBones={this.props.needBones}
+              time={this.props.time}
             />
           </div>
         </div>
@@ -128,7 +129,7 @@ class Wagger extends React.Component {
           <ShowDog nextDog={this.nextDog} nextImage={this.nextImage} priorImage={this.priorImage} needBones={this.props.needBones} currentDog={this.props.currentDog} seeWagger={this.props.waggers[this.props.wag].images[this.state.imageIndex]}/>
         </div>
         <div className='quadrant'>
-          <DogDetails speak={this.props.waggers[this.props.wag].speak} userName={this.props.waggers[this.props.wag].name} needBones={this.props.needBones} nextDog={this.nextDog}/>
+          <DogDetails speak={this.props.waggers[this.props.wag].speak} userName={this.props.waggers[this.props.wag].name} needBones={this.props.needBones} nextDog={this.nextDog} time={this.props.time}/>
         </div>
       </div>
     )
