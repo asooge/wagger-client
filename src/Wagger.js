@@ -68,7 +68,14 @@ class Wagger extends React.Component {
             // const ref = res.data.user.matches[res.data.user.matches.length - 1].reference
             console.log(res.data.user.matches[res.data.user.matches.length - 1])
             // update user data
-            axios(`${apiConfig}/users/${this.props.me}`)
+            axios({
+              method: 'get',
+              url: `${apiConfig}/users/${this.props.me}`,
+              headers: {
+                Authorization: `Bearer ${this.props.token}`
+              }
+            })
+            // axios(`${apiConfig}/users/${this.props.me}`)
               .then(this.props.setUser({ user: res.data.user }))
             // return JSX. Redirect to the match component
           } else {

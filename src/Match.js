@@ -51,7 +51,14 @@ class Match extends React.Component {
     })
       .then(res => {
         console.log(res)
-        axios(`${apiConfig}/users/${this.props.me}`)
+        axios({
+          method: 'get',
+          url: `${apiConfig}/users/${this.props.me}`,
+          headers: {
+            Authorization: `Bearer ${this.props.token}`
+          }
+        })
+        // axios(`${apiConfig}/users/${this.props.me}`)
           .then(res => {
             console.log(res)
             this.props.showMessage('delete-match')
