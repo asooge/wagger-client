@@ -35,7 +35,15 @@ class UpdateProfile extends React.Component {
     updateUser = event => {
       event.preventDefault()
       if (event.target.name.name === 'name') {
-        axios.post(`${apiConfig}/users/${this.props.user}/name`, { name: this.state.name })
+        axios({
+          method: 'post',
+          url: `${apiConfig}/users/${this.props.user}/name`,
+          headers: {
+            Authorization: `Bearer ${this.props.token}`
+          },
+          data: { name: this.state.name }
+        })
+        // axios.post(`${apiConfig}/users/${this.props.user}/name`, { name: this.state.name })
           .then(res => {
             this.setState({ name: '' })
             this.props.setUser({ user: res.data.user })
@@ -45,7 +53,15 @@ class UpdateProfile extends React.Component {
             this.props.showMessage('request')
           })
       } else if (event.target.name === 'speak') {
-        axios.post(`${apiConfig}/users/${this.props.user}/speak`, { speak: this.state.speak })
+        axios({
+          method: 'post',
+          url: `${apiConfig}/users/${this.props.user}/speak`,
+          headers: {
+            Authorization: `Bearer ${this.props.token}`
+          },
+          data: { speak: this.state.speak }
+        })
+        // axios.post(`${apiConfig}/users/${this.props.user}/speak`, { speak: this.state.speak })
           .then(res => {
             this.setState({ speak: '' })
             this.props.setUser({ user: res.data.user })
