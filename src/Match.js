@@ -106,6 +106,7 @@ class Match extends React.Component {
             me={this.props.me}
             setUser={this.props.setUser}
             token={this.props.token}
+            showMessage={this.props.showMessage}
           />
         </div>
       </div>

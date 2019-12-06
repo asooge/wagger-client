@@ -31,6 +31,7 @@ class App extends React.Component {
       imageSuccess: false,
       passwordSuccess: false,
       signOutSuccess: false,
+      messageSuccess: false,
       deletedMatch: false,
       instantMatch: true
     }
@@ -175,6 +176,10 @@ class App extends React.Component {
       this.setState({ imageSuccess: true })
       setTimeout(() => this.setState({ imageSuccess: false }), 3000)
     }
+    if (message === 'message-success') {
+      this.setState({ messageSuccess: true })
+      setTimeout(() => this.setState({ messageSuccess: false }), 3000)
+    }
   }
   render () {
     if (this.state.signInFail) {
@@ -191,6 +196,8 @@ class App extends React.Component {
       this.footerJsx = (<h1 className='success'>Match deleted</h1>)
     } else if (this.state.imageSuccess) {
       this.footerJsx = (<h1 className='success'>Image uploaded</h1>)
+    } else if (this.state.messageSuccess) {
+      this.footerJsx = (<h1 className='success'>Message posted</h1>)
     } else {
       this.footerJsx = (<h1>You found Wagger</h1>)
     }
