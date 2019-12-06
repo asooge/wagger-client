@@ -59,6 +59,13 @@ class UpdateProfile extends React.Component {
           .then(res => {
             this.setState({ file: '' })
             this.props.setUser({ user: res.data.user })
+            this.props.showMessage('upload-image')
+            // this.props.setState(state => (
+            //   { uploadImage: state.uploadImage + 1 }
+            // ))
+            // this.props.setState(state => (
+            //   { uploadImage: state.uploadImage - 1 }
+            // ))
           })
           .catch(() => {
             this.setState({ file: '' })
@@ -69,6 +76,7 @@ class UpdateProfile extends React.Component {
           .then(res => {
             this.setState({ file: '' })
             this.props.setUser({ user: res.data.user })
+            this.props.showMessage('upload-image')
           })
           .catch(() => {
             this.setState({ file: '' })

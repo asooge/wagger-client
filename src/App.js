@@ -28,6 +28,7 @@ class App extends React.Component {
       requestFail: false,
       signOutFail: false,
       imageFail: false,
+      imageSuccess: false,
       passwordSuccess: false,
       signOutSuccess: false,
       deletedMatch: false,
@@ -74,11 +75,27 @@ class App extends React.Component {
   makeAxios = (data) => {
     // create name for dog
     if (data.name) {
-      axios.post(`${apiConfig}/users/${this.state.user._id}/name`, data)
+      axios({
+        method: 'post',
+        url: `${apiConfig}/users/${this.state.user._id}/name`,
+        headers: {
+          Authorization: `Bearer ${this.state.user.token}`
+        },
+        data
+      })
+      // axios.post(`${apiConfig}/users/${this.state.user._id}/name`, data)
         .then(res => this.setState({ user: res.data.user }))
         .catch(() => this.showMessage('request'))
     } else if (data.speak) {
-      axios.post(`${apiConfig}/users/${this.state.user._id}/speak`, data)
+      axios({
+        method: 'post',
+        url: `${apiConfig}/users/${this.state.user._id}/speak`,
+        headers: {
+          Authorization: `Bearer ${this.state.user.token}`
+        },
+        data
+      })
+      // axios.post(`${apiConfig}/users/${this.state.user._id}/speak`, data)
         .then(res => this.setState({ user: res.data.user }))
         .catch(() => this.showMessage('request'))
     } else if (this.state.user && this.state.user.images.length === 4) {
@@ -86,6 +103,7 @@ class App extends React.Component {
         .then(res => {
           clearInterval(this.shuffleDog)
           this.setState({ user: res.data.user, currentDog: res.data.user.profile })
+          this.showMessage('upload-image')
         })
         .catch(() => this.showMessage('image'))
     } else if (this.state.user) {
@@ -93,6 +111,7 @@ class App extends React.Component {
         .then(res => {
           clearInterval(this.shuffleDog)
           this.setState({ user: res.data.user, currentDog: res.data.user.images[res.data.user.images.length - 1] })
+          this.showMessage('upload-image')
         })
         .catch(() => this.showMessage('image'))
     } else if (this.state.signIn === 'sign-in') {
@@ -152,6 +171,10 @@ class App extends React.Component {
       this.setState({ deletedMatch: true })
       setTimeout(() => this.setState({ deletedMatch: false }), 3000)
     }
+    if (message === 'upload-image') {
+      this.setState({ imageSuccess: true })
+      setTimeout(() => this.setState({ imageSuccess: false }), 3000)
+    }
   }
   render () {
     if (this.state.signInFail) {
@@ -166,6 +189,8 @@ class App extends React.Component {
       this.footerJsx = (<h1 className='fail'>Signed out</h1>)
     } else if (this.state.deletedMatch) {
       this.footerJsx = (<h1 className='success'>Match deleted</h1>)
+    } else if (this.state.imageSuccess) {
+      this.footerJsx = (<h1 className='success'>Image uploaded</h1>)
     } else {
       this.footerJsx = (<h1>You found Wagger</h1>)
     }
