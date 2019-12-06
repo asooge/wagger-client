@@ -24,7 +24,6 @@ const AuthForm = (props) => {
 
   const handleInput = (event) => {
     event.persist()
-    console.log(event.target.name)
     const htmlName = event.target.name
     const value = event.target.value
     if (htmlName === 'email') {
@@ -45,12 +44,10 @@ const AuthForm = (props) => {
   }
   const sendData = (event) => {
     event.preventDefault()
-    console.log(name)
     // define data based on form name
     let data = ''
     if (name) {
       data = { name: name }
-      console.log(data)
     } else if (password) {
       data = {
         credentials: {
@@ -60,12 +57,7 @@ const AuthForm = (props) => {
         }
       }
     } else if (event.target.name === 'file') {
-      console.log(event.target.name)
-      console.log('ready to send data')
-      console.log(event.target)
-      console.log(document.getElementById('image-form'))
       data = new FormData(event.target)
-      console.log(data)
     } else if (event.target.name === 'speak') {
       data = { speak: speak }
     } else if (event.target.name === 'profile') {
@@ -146,7 +138,6 @@ const AuthForm = (props) => {
     )
   }
   if (props.user && props.user.profile) {
-    console.log(props.user.profile)
     return <Redirect to='/wagger' />
   }
   return (
