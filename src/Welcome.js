@@ -4,7 +4,7 @@ const Welcome = (props) => {
   // const heyThere = (<p>Hey, {props.user.name}</p>)
   if (props.user) {
     return (
-      <div className='quadrant'>
+      <div className='quadrant' style={{ padding: '1rem' }}>
         <h1>Welcome to Wagger</h1>
         <p>Meet other dogs in your area</p>
         <p>Sign in or sign up to start wagging</p>
@@ -13,10 +13,11 @@ const Welcome = (props) => {
     )
   } else {
     return (
-      <div className='quadrant'>
+      <div className='quadrant' style={{ padding: '1rem' }}>
         <h1>Welcome to Wagger</h1>
         <p>Meet other dogs in your area</p>
         <p>Sign in or sign up to start wagging</p>
+        <p>Give it a try with <strong>test@email.com</strong> and password: <strong>test</strong> </p>
       </div>
     )
   }

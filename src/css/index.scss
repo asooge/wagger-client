@@ -5,9 +5,9 @@ body {
 }
 
 .full-view {
-  border: solid black 2px;
-  width: 960px;
-  height: 540px;
+  border: solid black .125rem;
+  width: 60rem;
+  height: 33.75rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -15,8 +15,8 @@ body {
 
 .quadrant {
   border: solid orange 1px;
-  width: 478px;
-  height: 268px;
+  width: 29.875rem;
+  height: 16.75rem;
 }
 
 .next-image {
@@ -35,25 +35,35 @@ body {
 }
 
 .header {
-  width: 960px;
-  height: 50px;
+  width: 60rem;
+  height: 4rem;
   background-color: orange;
+  padding: .5rem;
 }
 
 .footer {
-  width: 960px;
-  height: 60px;
+  width: 60rem;
+  height: 4rem;
   background-color: orange;
+  padding: .5rem;
 }
 
 .fail {
-  width: 960px;
-  height: 60px;
+  width: 60rem;
+  height: 4rem;
   background-color: red;
+  padding: .5rem;
+  position: relative;
+  right: .5rem;
+  bottom: .5rem;
 }
 
 .success {
-  width: 960px;
-  height: 60px;
+  width: 60rem;
+  height: 4rem;
   background-color: green;
+  padding: .5rem;
+  position: relative;
+  right: .5rem;
+  bottom: .5rem;
 }
