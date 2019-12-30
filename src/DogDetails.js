@@ -6,7 +6,7 @@ const DogDetails = props => {
     return (<Bones time={props.time}/>)
   } else {
     return (
-      <div className='quadrant'>
+      <div className='quadrant padding'>
         <h1>{props.userName}</h1>
         <p>{props.speak}</p>
         <h3 style={{ display: 'inline-block' }}>Is it a match: </h3>

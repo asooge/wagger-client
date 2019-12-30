@@ -67,7 +67,7 @@ class FullProfile extends React.Component {
             showMessage={this.props.showMessage}
           />
         </div>
-        <div className='quadrant'>
+        <div className='quadrant padding'>
           <BackToWagger
             setState={this.setState.bind(this)}
             name={this.props.name}

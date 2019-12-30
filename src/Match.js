@@ -85,7 +85,7 @@ class Match extends React.Component {
     }
     return (
       <div className='full-view'>
-        <div className='quadrant'>
+        <div className='quadrant padding'>
           <h1>Its a match!</h1>
           <h1 style={{ display: 'inline-block' }}>{this.matchObject.reference.name}</h1>
           <p>{this.matchObject.reference.speak}</p>
@@ -100,7 +100,7 @@ class Match extends React.Component {
           <button style={buttonStyle} onClick={() => this.setState({ toProfile: true })}>Back to Profile</button>
           <button style={buttonStyle} onClick={() => this.setState({ toWagger: true })}>Back to Wagger</button>
         </div>
-        <div className='quadrant'>
+        <div className='quadrant padding'>
           <Messages
             data={this.matchObject}
             me={this.props.me}

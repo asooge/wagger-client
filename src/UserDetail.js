@@ -18,7 +18,7 @@ const UserDetail = props => {
     return <Redirect to='/profile' />
   }
   return (
-    <div className='quadrant'>
+    <div className='quadrant padding'>
       <h1>{props.userName}</h1>
       <p>{props.speak}</p>
       <button style={buttonStyle} onClick={() => setFullProfile(true)}>Full Profile</button>
