@@ -16,14 +16,6 @@ const AllMatches = props => {
     <div style={boxStyle}>
       <h3>All Matches: </h3>
       {jsx}
-      <div>blah</div>
-      <div>blah</div>
-      <div>blah</div>
-      <div>blah</div>
-      <div>blah</div>
-      <div>blah</div>
-      <div>blah</div>
-      <div>blah</div>
     </div>
   )
 }
