@@ -64,6 +64,7 @@ const AuthForm = (props) => {
       data = new FormData(event.target)
     }
     // make axios call
+    console.log(data)
     props.makeAxios(data)
     // reset state to initial values (and clear forms)
     setEmail('')

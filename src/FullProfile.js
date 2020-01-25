@@ -1,9 +1,9 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import EditProfile from './EditProfile'
-import MyImages from './MyImages'
-import BackToWagger from './BackToWagger'
-import UpdateProfile from './UpdateProfile'
+import EditProfile from './FullProfile/EditProfile'
+import MyImages from './FullProfile/MyImages'
+import BackToWagger from './FullProfile/BackToWagger'
+import UpdateProfile from './FullProfile/UpdateProfile'
 
 class FullProfile extends React.Component {
   constructor (props) {

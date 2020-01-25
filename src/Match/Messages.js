@@ -1,5 +1,5 @@
 import React from 'react'
-import apiConfig from './apiConfig'
+import apiConfig from '../apiConfig'
 import axios from 'axios'
 
 class Messages extends React.Component {

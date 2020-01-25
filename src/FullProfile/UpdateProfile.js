@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Redirect } from 'react-router-dom'
-import apiConfig from './apiConfig'
+import apiConfig from '../apiConfig'
 import axios from 'axios'
 const FormData = require('form-data')
 

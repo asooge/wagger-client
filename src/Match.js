@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, withRouter } from 'react-router-dom'
-import Messages from './Messages'
+import Messages from './Match/Messages'
 import axios from 'axios'
 import apiConfig from './apiConfig'
 

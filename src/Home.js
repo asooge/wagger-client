@@ -1,7 +1,7 @@
 import React from 'react'
-import Welcome from './Welcome'
-import Randog from './Randog'
-import Auth from './Auth'
+import Welcome from './Home/Welcome'
+import Randog from './Home/Randog'
+import Auth from './Home/Auth'
 
 const Home = props => {
   return (
